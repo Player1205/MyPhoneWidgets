@@ -1,0 +1,31 @@
+# Android build outputs & caches
+*.apk
+*.ap_
+*.dex
+*.class
+**/bin/
+**/gen/
+**/out/
+**/build/
+.gradle/
+build/
+
+# IDE files
+.idea/
+*.iml
+.navigation/
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Android Studio local configs
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
