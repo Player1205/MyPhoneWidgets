@@ -47,42 +47,46 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
             appWidgetId: Int,
             quote: String
         ) {
-            val views = RemoteViews(context.packageName, R.layout.widget_days_left)
+            try {
+                val views = RemoteViews(context.packageName, R.layout.widget_days_left)
 
-            // Date & Countdown Calculations
-            val today = LocalDate.now()
-            val year = today.year
-            val totalDays = if (today.isLeapYear) 366 else 365
-            val dayOfYear = today.dayOfYear
-            val daysLeft = totalDays - dayOfYear
-            val percentGone = (dayOfYear.toDouble() / totalDays.toDouble()) * 100.0
+                // Date & Countdown Calculations
+                val today = LocalDate.now()
+                val year = today.year
+                val totalDays = if (today.isLeapYear) 366 else 365
+                val dayOfYear = today.dayOfYear
+                val daysLeft = totalDays - dayOfYear
+                val percentGone = (dayOfYear.toDouble() / totalDays.toDouble()) * 100.0
 
-            // Apply Data to UI
-            views.setTextViewText(R.id.tv_year_label, "YEAR $year")
-            views.setTextViewText(R.id.tv_days_number, daysLeft.toString())
-            views.setTextViewText(
-                R.id.tv_percent_badge,
-                String.format(Locale.US, "%.1f%% GONE", percentGone)
-            )
-            views.setProgressBar(R.id.progress_year, 100, percentGone.toInt(), false)
-            views.setTextViewText(R.id.tv_quote_text, quote)
+                // Apply Data to UI
+                views.setTextViewText(R.id.tv_year_label, "⏳ YEAR $year")
+                views.setTextViewText(R.id.tv_days_number, daysLeft.toString())
+                views.setTextViewText(
+                    R.id.tv_percent_badge,
+                    String.format(Locale.US, "%.1f%% GONE", percentGone)
+                )
+                views.setProgressBar(R.id.progress_year, 100, percentGone.toInt(), false)
+                views.setTextViewText(R.id.tv_quote_text, quote)
 
-            // Setup Click PendingIntent to cycle quote on tap
-            val cycleIntent = Intent(context, DaysLeftWidgetProvider::class.java).apply {
-                action = ACTION_CYCLE_QUOTE
+                // Setup Click PendingIntent to cycle quote on tap
+                val cycleIntent = Intent(context, DaysLeftWidgetProvider::class.java).apply {
+                    action = ACTION_CYCLE_QUOTE
+                }
+                val pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    0,
+                    cycleIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+
+                views.setOnClickPendingIntent(R.id.btn_refresh, pendingIntent)
+                views.setOnClickPendingIntent(R.id.quote_container, pendingIntent)
+                views.setOnClickPendingIntent(R.id.widget_card, pendingIntent)
+
+                appWidgetManager.updateAppWidget(appWidgetId, views)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                cycleIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-            )
-
-            views.setOnClickPendingIntent(R.id.btn_refresh, pendingIntent)
-            views.setOnClickPendingIntent(R.id.quote_container, pendingIntent)
-            views.setOnClickPendingIntent(R.id.tv_days_number, pendingIntent)
-
-            appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
 }

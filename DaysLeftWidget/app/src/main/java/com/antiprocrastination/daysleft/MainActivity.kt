@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val daysLeft = totalDays - dayOfYear
         val percentGone = (dayOfYear.toDouble() / totalDays.toDouble()) * 100.0
 
-        findViewById<TextView>(R.id.tv_year_label)?.text = "YEAR $year"
+        findViewById<TextView>(R.id.tv_year_label)?.text = "⏳ YEAR $year"
         findViewById<TextView>(R.id.tv_days_number)?.text = daysLeft.toString()
         findViewById<TextView>(R.id.tv_percent_badge)?.text =
             String.format(Locale.US, "%.1f%% GONE", percentGone)
