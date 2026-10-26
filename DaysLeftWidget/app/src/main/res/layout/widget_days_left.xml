@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/widget_card_bg">
 
-        <!-- Complete 365 Year Dots Matrix Canvas (Uniform Starry Field) -->
+        <!-- Complete 365 Year Dots Matrix Canvas (Uniform Starry Field with Plinths & Top-Layer Today Dot) -->
         <ImageView
             android:id="@+id/iv_year_dots"
             android:layout_width="match_parent"
@@ -44,7 +44,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/scrim_capsule_year"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:paddingTop="3dp"
@@ -66,7 +65,7 @@
                     android:textSize="13sp" />
             </RelativeLayout>
 
-            <!-- Centerpiece Hero: Translucent Scrim Plinth with Playfair ExtraBold Italic -->
+            <!-- Centerpiece Hero: Playfair ExtraBold Italic in Cyber Amber -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -75,39 +74,29 @@
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp">
 
-                <FrameLayout
+                <TextView
+                    android:id="@+id/tv_days_hero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/scrim_capsule_hero"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp">
-
-                    <TextView
-                        android:id="@+id/tv_days_hero"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="66 days left"
-                        android:textColor="@color/hero_days_color"
-                        android:textSize="52sp"
-                        android:textStyle="italic"
-                        android:fontFamily="@font/playfair_display_italic"
-                        android:autoSizeTextType="uniform"
-                        android:autoSizeMinTextSize="28sp"
-                        android:autoSizeMaxTextSize="68sp"
-                        android:autoSizeStepGranularity="2sp"
-                        android:includeFontPadding="false"
-                        android:letterSpacing="-0.02"
-                        android:shadowColor="#B3FFB703"
-                        android:shadowDx="0"
-                        android:shadowDy="0"
-                        android:shadowRadius="10" />
-                </FrameLayout>
+                    android:gravity="center"
+                    android:text="66 days left"
+                    android:textColor="@color/hero_days_color"
+                    android:textSize="52sp"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/playfair_display_italic"
+                    android:autoSizeTextType="uniform"
+                    android:autoSizeMinTextSize="28sp"
+                    android:autoSizeMaxTextSize="68sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:includeFontPadding="false"
+                    android:letterSpacing="-0.02"
+                    android:shadowColor="#B3FFB703"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="10" />
             </LinearLayout>
 
-            <!-- Bottom: User Quote Section (Translucent Scrim Plinth) -->
+            <!-- Bottom: User Quote Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,7 +106,6 @@
                     android:id="@+id/quote_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/scrim_capsule_quote"
                     android:paddingStart="22dp"
                     android:paddingEnd="22dp"
                     android:paddingTop="6dp"
