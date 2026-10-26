@@ -56,11 +56,15 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
                 val dayOfYear = today.dayOfYear
                 val daysLeft = totalDays - dayOfYear
 
-                // Apply Data to UI - Exactly matching the designer specification
+                // Apply Data to UI
                 views.setTextViewText(R.id.tv_year_label, "in $year")
                 views.setTextViewText(R.id.tv_days_hero, "$daysLeft days left")
                 views.setTextViewText(R.id.tv_quote_label, "QUOTE BY ME:")
                 views.setTextViewText(R.id.tv_quote_text, "“$quote”")
+
+                // Generate and apply dynamic 365 Year Dots background
+                val dotsBitmap = YearDotsGenerator.generateYearDotsBitmap(today = today)
+                views.setImageViewBitmap(R.id.iv_year_dots, dotsBitmap)
 
                 // Open the floating translucent Add Quote dialog directly on the home screen
                 val openDialogIntent = Intent(context, AddQuoteActivity::class.java).apply {

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -36,8 +37,12 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.tv_year_label)?.text = "in $year"
         findViewById<TextView>(R.id.tv_days_hero)?.text = "$daysLeft days left"
-        findViewById<TextView>(R.id.tv_quote_label)?.text = "quote by me:"
+        findViewById<TextView>(R.id.tv_quote_label)?.text = "QUOTE BY ME:"
         findViewById<TextView>(R.id.tv_quote_text)?.text = "“$currentQuote”"
+
+        // Render dynamic year dots in preview
+        val dotsBitmap = YearDotsGenerator.generateYearDotsBitmap(today = today)
+        findViewById<ImageView>(R.id.iv_year_dots)?.setImageBitmap(dotsBitmap)
     }
 
     private fun setupQuotesVault() {
