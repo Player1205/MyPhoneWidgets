@@ -11,12 +11,11 @@ import java.time.LocalTime
 object YearDotsGenerator {
 
     /**
-     * Generates a complete 365-day ambient starry grid with tight, borderless text scrims:
-     * - Background scrims are strictly limited to the text boundaries (no excess width).
-     * - ZERO borderlines on the text backgrounds.
-     * - Text "in 2026" is centered inside its capsule.
-     * - Ambient dots are more visible and radiant throughout.
-     * - Today's dot is drawn on the top layer at 100% full brightness (Cyber Amber rim & dynamic white sweep fill).
+     * Generates a pure 365-day ambient starry grid:
+     * - ZERO rectangular background boxes or borderlines (no excess background above, left, or right).
+     * - Dots directly under text letters are softly dimmed for perfect legibility.
+     * - Dots around text are bright, radiant starlight dots.
+     * - TODAY'S DOT is rendered on the top layer at 100% full brightness (Cyber Amber rim & dynamic white sweep fill).
      */
     fun generateYearDotsBitmap(
         width: Int = 720,
@@ -39,41 +38,37 @@ object YearDotsGenerator {
         val stepX = (width - paddingX * 2) / (cols - 1)
         val stepY = (height - paddingY * 2) / (rows - 1)
 
-        // Tight text-only plinth bounding boxes (strictly limited to text, perfectly centered)
-        val plinthYear = RectF(32f, 22f, 138f, 58f)
-        val plinthHero = RectF(78f, 90f, 642f, 206f)
-        val plinthQuote = RectF(155f, 242f, 565f, 326f)
-
-        fun inAnyPlinth(x: Float, y: Float): Boolean {
-            return plinthYear.contains(x, y) || plinthHero.contains(x, y) || plinthQuote.contains(x, y)
+        // Exact letter bounding areas (strictly under the text glyphs, 0px box overhang)
+        fun isUnderText(x: Float, y: Float): Boolean {
+            // Under hero text letters "66 days left"
+            if (x in 100f..620f && y in 126f..215f) return true
+            // Under quote text letters
+            if (x in 155f..565f && y in 244f..324f) return true
+            // Under "in 2026"
+            if (x in 36f..130f && y in 24f..56f) return true
+            return false
         }
 
-        // Higher-visibility starlight dots outside text backgrounds
-        val pastPaintOutside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(72, 255, 255, 255) // More visible starlight (~28% opacity)
+        // Radiant starlight dots outside text
+        val pastPaintBright = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.argb(76, 255, 255, 255) // Bright starlight (~30% opacity)
             style = Paint.Style.FILL
         }
-        val futurePaintOutside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(40, 255, 255, 255) // More visible hollow ring (~16% opacity)
+        val futurePaintBright = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.argb(42, 255, 255, 255) // Crisp hollow ring (~16% opacity)
             style = Paint.Style.STROKE
             strokeWidth = 1.4f
         }
 
-        // Softer dots inside text backgrounds
-        val pastPaintInside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(36, 255, 255, 255) // Visible, but softer (~14% opacity)
+        // Softly dimmed dots directly under text glyphs
+        val pastPaintDimmed = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.argb(22, 255, 255, 255) // Softened so letters pop cleanly
             style = Paint.Style.FILL
         }
-        val futurePaintInside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(20, 255, 255, 255) // Subtle hollow ring (~8% opacity)
+        val futurePaintDimmed = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.argb(14, 255, 255, 255) // Subtle
             style = Paint.Style.STROKE
             strokeWidth = 1.2f
-        }
-
-        // Borderless dark glass fill paint (NO BORDERLINE!)
-        val plinthFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(135, 8, 10, 18) // Soft translucent dark tint
-            style = Paint.Style.FILL
         }
 
         // Today's dot paints (100% full intensity)
@@ -87,12 +82,12 @@ object YearDotsGenerator {
             style = Paint.Style.FILL
         }
         val todayGlowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(110, 255, 183, 3)
+            color = Color.argb(120, 255, 183, 3)
             style = Paint.Style.STROKE
             strokeWidth = 2.0f
         }
 
-        // Step 1: Draw ambient dots across the entire grid
+        // Step 1: Draw ambient dots across the complete grid
         var todayX = -1f
         var todayY = -1f
 
@@ -103,28 +98,23 @@ object YearDotsGenerator {
                 val cx = paddingX + c * stepX
                 val cy = paddingY + r * stepY
 
-                val isInside = inAnyPlinth(cx, cy)
+                val under = isUnderText(cx, cy)
 
                 if (day == dayOfYear) {
                     todayX = cx
                     todayY = cy
                 } else if (day < dayOfYear) {
-                    val paint = if (isInside) pastPaintInside else pastPaintOutside
+                    val paint = if (under) pastPaintDimmed else pastPaintBright
                     canvas.drawCircle(cx, cy, 2.8f, paint)
                 } else {
-                    val paint = if (isInside) futurePaintInside else futurePaintOutside
+                    val paint = if (under) futurePaintDimmed else futurePaintBright
                     canvas.drawCircle(cx, cy, 2.4f, paint)
                 }
                 day++
             }
         }
 
-        // Step 2: Draw the borderless translucent text plinths (NO STROKE / NO BORDERLINE)
-        canvas.drawRoundRect(plinthYear, 18f, 18f, plinthFillPaint)
-        canvas.drawRoundRect(plinthHero, 24f, 24f, plinthFillPaint)
-        canvas.drawRoundRect(plinthQuote, 20f, 20f, plinthFillPaint)
-
-        // Step 3: Draw Today's Dot ON TOP (100% visible, bright Cyber Amber)
+        // Step 2: Draw Today's Dot ON TOP (100% visible, bright Cyber Amber)
         if (todayX >= 0f && todayY >= 0f) {
             val radius = 6.2f
             canvas.drawCircle(todayX, todayY, radius + 2.5f, todayGlowPaint)

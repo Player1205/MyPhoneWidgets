@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/widget_card_bg">
 
-        <!-- Complete 365 Year Dots Canvas with Borderless Plinths & Top-Layer Today Dot -->
+        <!-- Complete 365 Year Dots Canvas (Pure Starry Field with Zero Protruding Boxes) -->
         <ImageView
             android:id="@+id/iv_year_dots"
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp">
 
-            <!-- Top Header: Centered Year Pill & Direct Add Quote Shortcut -->
+            <!-- Top Header: Year Label & Direct Add Quote Shortcut -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -44,16 +44,17 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:paddingStart="14dp"
-                    android:paddingEnd="14dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
                     android:text="in 2026"
                     android:textColor="@color/text_header_muted"
                     android:textSize="12sp"
                     android:textStyle="normal"
-                    android:letterSpacing="0.04" />
+                    android:letterSpacing="0.04"
+                    android:shadowColor="#80000000"
+                    android:shadowRadius="4" />
 
                 <TextView
                     android:id="@+id/btn_quick_add"
@@ -66,14 +67,14 @@
                     android:textSize="13sp" />
             </RelativeLayout>
 
-            <!-- Centerpiece Hero: Playfair ExtraBold Italic in Cyber Amber -->
+            <!-- Centerpiece Hero: Playfair ExtraBold Italic in Cyber Amber (Pure text with no box overhang) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp">
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp">
 
                 <TextView
                     android:id="@+id/tv_days_hero"
@@ -107,10 +108,10 @@
                     android:id="@+id/quote_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="22dp"
-                    android:paddingEnd="22dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="7dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
