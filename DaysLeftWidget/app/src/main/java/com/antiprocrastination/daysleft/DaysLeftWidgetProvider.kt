@@ -17,9 +17,9 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        val quote = QuoteManager.getCurrentQuote(context)
+        val quoteItem = QuoteManager.getCurrentQuote(context)
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId, quote)
+            updateAppWidget(context, appWidgetManager, appWidgetId, quoteItem)
         }
     }
 
@@ -45,7 +45,7 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
-            quote: String
+            quoteItem: QuoteItem
         ) {
             try {
                 val views = RemoteViews(context.packageName, R.layout.widget_days_left)
@@ -59,14 +59,14 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
                 val percentGone = (dayOfYear.toDouble() / totalDays.toDouble()) * 100.0
 
                 // Apply Data to UI
-                views.setTextViewText(R.id.tv_year_label, "⏳ YEAR $year")
-                views.setTextViewText(R.id.tv_days_number, daysLeft.toString())
+                views.setTextViewText(R.id.tv_year_label, "in $year")
+                views.setTextViewText(R.id.tv_pill_days, "$daysLeft days left")
                 views.setTextViewText(
                     R.id.tv_percent_badge,
-                    String.format(Locale.US, "%.1f%% GONE", percentGone)
+                    String.format(Locale.US, "%.1f%% gone", percentGone)
                 )
-                views.setProgressBar(R.id.progress_year, 100, percentGone.toInt(), false)
-                views.setTextViewText(R.id.tv_quote_text, quote)
+                views.setTextViewText(R.id.tv_quote_label, quoteItem.label)
+                views.setTextViewText(R.id.tv_quote_text, quoteItem.text)
 
                 // Setup Click PendingIntent to cycle quote on tap
                 val cycleIntent = Intent(context, DaysLeftWidgetProvider::class.java).apply {
@@ -81,6 +81,7 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
 
                 views.setOnClickPendingIntent(R.id.btn_refresh, pendingIntent)
                 views.setOnClickPendingIntent(R.id.quote_container, pendingIntent)
+                views.setOnClickPendingIntent(R.id.tv_pill_days, pendingIntent)
                 views.setOnClickPendingIntent(R.id.widget_card, pendingIntent)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)

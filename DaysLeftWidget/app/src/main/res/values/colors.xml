@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Widget Dark AMOLED Palette -->
-    <color name="widget_card_background">#0E1118</color>
-    <color name="widget_card_border">#232838</color>
-    <color name="text_title">#FFFFFF</color>
-    <color name="text_muted">#8F9AA8</color>
-    <color name="text_accent_alert">#FF4D5A</color>
-    <color name="text_accent_gold">#FFB74D</color>
-    <color name="badge_background">#171B26</color>
-    <color name="badge_border">#2C3347</color>
-    <color name="progress_track_bg">#1A1E2B</color>
-    <color name="progress_track_fill">#FF4555</color>
-    <color name="quote_bg">#131720</color>
+    <!-- AMOLED True Black Luxury Palette -->
+    <color name="widget_card_background">#000000</color>
+    <color name="widget_card_border">#232733</color>
 
-    <!-- App System Theme Colors -->
+    <!-- Royal Honey Gold Gradient -->
+    <color name="gold_gradient_start">#FFBF1A</color>
+    <color name="gold_gradient_center">#F5A623</color>
+    <color name="gold_gradient_end">#E29000</color>
+    <color name="gold_rim_light">#FFE58F</color>
+
+    <!-- Text Colors -->
+    <color name="pill_text_dark">#0A0A0C</color>
+    <color name="text_header_muted">#8B919E</color>
+    <color name="quote_label_color">#838997</color>
+    <color name="quote_text_color">#FFFFFF</color>
+    <color name="text_accent_gold">#F5A623</color>
+    <color name="text_accent_alert">#F5A623</color>
+    <color name="text_title">#FFFFFF</color>
+    <color name="text_muted">#8B919E</color>
+
+    <!-- App System & UI Container Colors -->
+    <color name="quote_bg">#12151F</color>
+    <color name="badge_background">#161924</color>
+    <color name="badge_border">#262C3D</color>
+    <color name="progress_track_bg">#181B26</color>
+    <color name="progress_track_fill">#F5A623</color>
+    <color name="input_bg">#141722</color>
+    <color name="input_border">#2A3042</color>
+
+    <!-- Basic Swatches -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary_dark">#0E1118</color>
-    <color name="accent_color">#FF4D5A</color>
+    <color name="primary_dark">#000000</color>
+    <color name="accent_color">#F5A623</color>
 </resources>

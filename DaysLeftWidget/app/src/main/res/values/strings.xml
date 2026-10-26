@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">Days Left Widget</string>
-    <string name="widget_description">Anti-procrastination countdown showing remaining days in the year and year completion progress.</string>
-    <string name="widget_title">YEAR %1$d</string>
-    <string name="widget_days_count">--</string>
-    <string name="widget_days_label">DAYS LEFT</string>
-    <string name="widget_percent_label">%1$.1f%% GONE</string>
-    <string name="widget_default_quote">"Stop planning. Start executing. Time waits for no one."</string>
+    <string name="widget_description">Anti-procrastination countdown showing remaining days in the year and signature mindset quotes.</string>
+    <string name="widget_title">in %1$d</string>
+    <string name="widget_days_count">%1$d days left</string>
+    <string name="widget_quote_label">quote by me:</string>
+    <string name="widget_default_quote">“i am one of the few”</string>
     <string name="btn_add_widget">Add Widget to Home Screen</string>
     <string name="app_intro">This widget places a high-impact anti-procrastination countdown directly on your Samsung M35 Home Screen.</string>
 </resources>

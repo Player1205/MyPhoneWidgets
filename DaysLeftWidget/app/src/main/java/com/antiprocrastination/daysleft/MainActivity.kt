@@ -5,7 +5,7 @@ import android.content.ComponentName
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ProgressBar
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setupPreview()
+        setupCustomQuoteEditor()
         setupPinWidgetButton()
     }
 
@@ -30,20 +31,44 @@ class MainActivity : AppCompatActivity() {
         val daysLeft = totalDays - dayOfYear
         val percentGone = (dayOfYear.toDouble() / totalDays.toDouble()) * 100.0
 
-        findViewById<TextView>(R.id.tv_year_label)?.text = "⏳ YEAR $year"
-        findViewById<TextView>(R.id.tv_days_number)?.text = daysLeft.toString()
+        val quoteItem = QuoteManager.getCurrentQuote(this)
+
+        findViewById<TextView>(R.id.tv_year_label)?.text = "in $year"
+        findViewById<TextView>(R.id.tv_pill_days)?.text = "$daysLeft days left"
         findViewById<TextView>(R.id.tv_percent_badge)?.text =
-            String.format(Locale.US, "%.1f%% GONE", percentGone)
-        findViewById<ProgressBar>(R.id.progress_year)?.apply {
-            max = 100
-            progress = percentGone.toInt()
+            String.format(Locale.US, "%.1f%% gone", percentGone)
+        findViewById<TextView>(R.id.tv_quote_label)?.text = quoteItem.label
+        findViewById<TextView>(R.id.tv_quote_text)?.text = quoteItem.text
+    }
+
+    private fun setupCustomQuoteEditor() {
+        val etQuote = findViewById<EditText>(R.id.et_custom_quote) ?: return
+        val btnSave = findViewById<Button>(R.id.btn_save_quote) ?: return
+
+        etQuote.setText(QuoteManager.getCustomQuote(this))
+
+        btnSave.setOnClickListener {
+            val text = etQuote.text.toString().trim()
+            if (text.isNotEmpty()) {
+                QuoteManager.setCustomQuote(this, text)
+                setupPreview()
+
+                // Trigger widget update
+                val appWidgetManager = AppWidgetManager.getInstance(this)
+                val componentName = ComponentName(this, DaysLeftWidgetProvider::class.java)
+                val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
+                val quoteItem = QuoteManager.getCurrentQuote(this)
+                for (id in appWidgetIds) {
+                    DaysLeftWidgetProvider.updateAppWidget(this, appWidgetManager, id, quoteItem)
+                }
+
+                Toast.makeText(this, "Quote updated on widget!", Toast.LENGTH_SHORT).show()
+            }
         }
-        findViewById<TextView>(R.id.tv_quote_text)?.text =
-            QuoteManager.getCurrentQuote(this)
     }
 
     private fun setupPinWidgetButton() {
-        val btnPin = findViewById<Button>(R.id.btn_pin_widget)
+        val btnPin = findViewById<Button>(R.id.btn_pin_widget) ?: return
         btnPin.setOnClickListener {
             val appWidgetManager = getSystemService(AppWidgetManager::class.java)
             val myProvider = ComponentName(this, DaysLeftWidgetProvider::class.java)

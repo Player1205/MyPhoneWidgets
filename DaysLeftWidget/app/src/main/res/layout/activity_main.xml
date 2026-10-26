@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:text="⏳ Days Left Widget"
             android:textColor="@color/text_title"
             android:textSize="24sp"
@@ -24,20 +24,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:gravity="center"
-            android:text="Custom Anti-Procrastination Widget for Samsung Galaxy M35 5G"
+            android:text="Luxury AMOLED Widget for Samsung Galaxy M35 5G"
             android:textColor="@color/text_muted"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <!-- Widget Live Preview Card -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="WIDGET PREVIEW"
+            android:layout_marginTop="24dp"
+            android:text="LIVE WIDGET PREVIEW"
             android:textColor="@color/text_muted"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:textStyle="bold"
             android:letterSpacing="0.08" />
 
@@ -46,26 +46,13 @@
             layout="@layout/widget_days_left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="8dp" />
 
-        <!-- Add Widget Button -->
-        <Button
-            android:id="@+id/btn_pin_widget"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="28dp"
-            android:backgroundTint="@color/accent_color"
-            android:text="⚡ Add Widget to Home Screen"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <!-- Instructions Card -->
+        <!-- Custom Personal Quote Editor -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="22dp"
             android:background="@drawable/quote_bg"
             android:orientation="vertical"
             android:padding="16dp">
@@ -73,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="📱 How to place on Home Screen:"
+                android:text="✍️ Your Personal Quote (quote by me:)"
                 android:textColor="@color/text_title"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -81,20 +68,84 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:lineSpacingExtra="4dp"
-                android:text="1. Tap the button above, or go to your Home Screen.\n2. Long-press empty space on your Samsung screen.\n3. Tap 'Widgets' and select 'Days Left Widget'.\n4. Drag it to your desired spot.\n5. Adjust width so it spans across your screen."
+                android:layout_marginTop="4dp"
+                android:text="This is your signature quote displayed on the widget by default."
                 android:textColor="@color/text_muted"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/et_custom_quote"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/input_bg"
+                android:hint="e.g. i am one of the few"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/text_muted"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_save_quote"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/accent_color"
+                android:text="Save Quote &amp; Update Widget"
+                android:textAllCaps="false"
+                android:textColor="@color/pill_text_dark"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Add Widget Button -->
+        <Button
+            android:id="@+id/btn_pin_widget"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/accent_color"
+            android:text="⚡ Add Widget to Home Screen"
+            android:textAllCaps="false"
+            android:textColor="@color/pill_text_dark"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- Instructions Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/quote_bg"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📱 How to place on Samsung Home Screen:"
+                android:textColor="@color/text_title"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:lineSpacingExtra="3dp"
+                android:text="1. Tap the button above, or go to Home Screen.\n2. Long-press empty space on screen.\n3. Tap 'Widgets' &gt; 'Days Left Widget'.\n4. Drag it to your home screen.\n5. Resize width to span nicely across screen."
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <!-- Tap Tip -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
-            android:text="💡 Tip: Tapping the widget on your home screen rotates reality-check quotes!"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="💡 Tip: Tap the widget on your home screen anytime to rotate quotes!"
             android:textColor="@color/text_accent_gold"
             android:textSize="12sp" />
 
