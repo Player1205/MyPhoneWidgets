@@ -8,14 +8,14 @@
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
-    <!-- Translucent Curved Card (Frosted dark obsidian glass) -->
+    <!-- Translucent Curved Card (Frosted dark obsidian glass, zero borderlines) -->
     <FrameLayout
         android:id="@+id/widget_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/widget_card_bg">
 
-        <!-- Complete 365 Year Dots Canvas (Pure Starry Field with Zero Protruding Boxes) -->
+        <!-- Complete 365 Year Dots & Glowing Playfair Display Typography Canvas -->
         <ImageView
             android:id="@+id/iv_year_dots"
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:scaleType="fitXY"
             android:contentDescription="@null" />
 
-        <!-- Foreground Content Layer -->
+        <!-- Interactive Click Overlay Layer (Transparent touch targets wired to AddQuoteActivity) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,7 +33,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp">
 
-            <!-- Top Header: Year Label & Direct Add Quote Shortcut -->
+            <!-- Top Header (Year Label & Direct Add Quote Shortcut) -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -44,17 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:text="in 2026"
-                    android:textColor="@color/text_header_muted"
-                    android:textSize="12sp"
-                    android:textStyle="normal"
-                    android:letterSpacing="0.04"
-                    android:shadowColor="#80000000"
-                    android:shadowRadius="4" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/btn_quick_add"
@@ -62,40 +52,23 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="2dp"
-                    android:text="✍️"
-                    android:textSize="13sp" />
+                    android:padding="8dp"
+                    android:text="" />
             </RelativeLayout>
 
-            <!-- Centerpiece Hero: Playfair ExtraBold Italic in Cyber Amber (Pure text with no box overhang) -->
+            <!-- Centerpiece Hero: Clickable Area -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp">
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tv_days_hero"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="66 days left"
-                    android:textColor="@color/hero_days_color"
-                    android:textSize="52sp"
-                    android:textStyle="italic"
-                    android:fontFamily="@font/playfair_display_italic"
-                    android:autoSizeTextType="uniform"
-                    android:autoSizeMinTextSize="28sp"
-                    android:autoSizeMaxTextSize="68sp"
-                    android:autoSizeStepGranularity="2sp"
-                    android:includeFontPadding="false"
-                    android:letterSpacing="-0.02"
-                    android:shadowColor="#B3FFB703"
-                    android:shadowDx="0"
-                    android:shadowDy="0"
-                    android:shadowRadius="10" />
+                    android:text="" />
             </LinearLayout>
 
             <!-- Bottom: User Quote Section -->
@@ -108,10 +81,6 @@
                     android:id="@+id/quote_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="4dp"
-                    android:paddingBottom="4dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -120,30 +89,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="quote by me:"
-                        android:textColor="@color/quote_label_color"
-                        android:textSize="11sp"
-                        android:letterSpacing="0.06"
-                        android:includeFontPadding="false" />
+                        android:text="" />
 
                     <TextView
                         android:id="@+id/tv_quote_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
                         android:gravity="center"
-                        android:text="“i am one of the few”"
-                        android:textColor="@color/quote_text_color"
-                        android:textSize="17sp"
-                        android:textStyle="italic"
-                        android:fontFamily="@font/playfair_display_quote"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="3dp"
-                        android:shadowColor="#99000000"
-                        android:shadowDx="0"
-                        android:shadowDy="2"
-                        android:shadowRadius="6" />
+                        android:text="" />
                 </LinearLayout>
             </LinearLayout>
 

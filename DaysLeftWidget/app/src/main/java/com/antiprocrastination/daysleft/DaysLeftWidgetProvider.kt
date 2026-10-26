@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import java.time.LocalDate
+import java.time.LocalTime
 
 class DaysLeftWidgetProvider : AppWidgetProvider() {
 
@@ -49,22 +50,26 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
             try {
                 val views = RemoteViews(context.packageName, R.layout.widget_days_left)
 
-                // Date & Countdown Calculations
                 val today = LocalDate.now()
-                val year = today.year
-                val totalDays = if (today.isLeapYear) 366 else 365
-                val dayOfYear = today.dayOfYear
-                val daysLeft = totalDays - dayOfYear
+                val now = LocalTime.now()
 
-                // Apply Data to UI
-                views.setTextViewText(R.id.tv_year_label, "in $year")
-                views.setTextViewText(R.id.tv_days_hero, "$daysLeft days left")
-                views.setTextViewText(R.id.tv_quote_label, "quote by me:")
-                views.setTextViewText(R.id.tv_quote_text, "“$quote”")
+                // Generate full high-DPI widget bitmap with authentic Playfair Display & Cyber Amber glow
+                // This completely bypasses Samsung One UI / OEM Launcher limitations where RemoteViews
+                // ignores custom fonts (@font/playfair_display) and hardware text-shadow glow
+                val widgetBitmap = YearDotsGenerator.generateWidgetBitmap(
+                    context = context,
+                    quote = quote,
+                    today = today,
+                    now = now
+                )
+                views.setImageViewBitmap(R.id.iv_year_dots, widgetBitmap)
 
-                // Generate and apply dynamic 365 Year Dots background
-                val dotsBitmap = YearDotsGenerator.generateYearDotsBitmap(today = today)
-                views.setImageViewBitmap(R.id.iv_year_dots, dotsBitmap)
+                // Clear remote TextView text so Samsung Launcher doesn't render duplicate flat Roboto text
+                views.setTextViewText(R.id.tv_year_label, "")
+                views.setTextViewText(R.id.btn_quick_add, "")
+                views.setTextViewText(R.id.tv_days_hero, "")
+                views.setTextViewText(R.id.tv_quote_label, "")
+                views.setTextViewText(R.id.tv_quote_text, "")
 
                 // Open the floating translucent Add Quote dialog directly on the home screen
                 val openDialogIntent = Intent(context, AddQuoteActivity::class.java).apply {

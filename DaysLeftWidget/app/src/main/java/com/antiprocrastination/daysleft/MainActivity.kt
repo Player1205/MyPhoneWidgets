@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.time.LocalDate
+import java.time.LocalTime
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,21 +29,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupPreview() {
         val today = LocalDate.now()
-        val year = today.year
-        val totalDays = if (today.isLeapYear) 366 else 365
-        val dayOfYear = today.dayOfYear
-        val daysLeft = totalDays - dayOfYear
-
+        val now = LocalTime.now()
         val currentQuote = QuoteManager.getCurrentQuote(this)
 
-        findViewById<TextView>(R.id.tv_year_label)?.text = "in $year"
-        findViewById<TextView>(R.id.tv_days_hero)?.text = "$daysLeft days left"
-        findViewById<TextView>(R.id.tv_quote_label)?.text = "QUOTE BY ME:"
-        findViewById<TextView>(R.id.tv_quote_text)?.text = "“$currentQuote”"
+        findViewById<TextView>(R.id.tv_year_label)?.text = ""
+        findViewById<TextView>(R.id.btn_quick_add)?.text = ""
+        findViewById<TextView>(R.id.tv_days_hero)?.text = ""
+        findViewById<TextView>(R.id.tv_quote_label)?.text = ""
+        findViewById<TextView>(R.id.tv_quote_text)?.text = ""
 
-        // Render dynamic year dots in preview
-        val dotsBitmap = YearDotsGenerator.generateYearDotsBitmap(today = today)
-        findViewById<ImageView>(R.id.iv_year_dots)?.setImageBitmap(dotsBitmap)
+        // Render full pixel-perfect widget preview bitmap
+        val widgetBitmap = YearDotsGenerator.generateWidgetBitmap(
+            context = this,
+            quote = currentQuote,
+            today = today,
+            now = now
+        )
+        findViewById<ImageView>(R.id.iv_year_dots)?.setImageBitmap(widgetBitmap)
     }
 
     private fun setupQuotesVault() {
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             if (text.isNotEmpty()) {
                 QuoteManager.addQuote(this, text)
                 etNewQuote.text.clear()
+                setupPreview()
                 refreshQuotesListUI()
                 refreshWidgets()
                 Toast.makeText(this, "Quote added to your vault!", Toast.LENGTH_SHORT).show()
