@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/widget_card_bg">
 
-        <!-- Dynamic 365 Year Dots Matrix Canvas -->
+        <!-- Dynamic 365 Year Dots Matrix Canvas (Wrapping around text with zero overlap) -->
         <ImageView
             android:id="@+id/iv_year_dots"
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                     android:textSize="13sp" />
             </RelativeLayout>
 
-            <!-- Centerpiece Hero: Massive Kinetic Slanted "66 days left" Filling Majority of Widget Area -->
+            <!-- Centerpiece Hero: Playfair Display Italic with Radiant Cyber Amber Glow -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -79,20 +79,20 @@
                     android:textColor="@color/hero_days_color"
                     android:textSize="50sp"
                     android:textStyle="bold|italic"
-                    android:fontFamily="sans-serif-black"
+                    android:fontFamily="@font/playfair_display_italic"
                     android:autoSizeTextType="uniform"
                     android:autoSizeMinTextSize="28sp"
                     android:autoSizeMaxTextSize="64sp"
                     android:autoSizeStepGranularity="2sp"
                     android:includeFontPadding="false"
-                    android:letterSpacing="-0.03"
-                    android:shadowColor="#80000000"
+                    android:letterSpacing="-0.02"
+                    android:shadowColor="#E6FFB703"
                     android:shadowDx="0"
-                    android:shadowDy="3"
-                    android:shadowRadius="10" />
+                    android:shadowDy="0"
+                    android:shadowRadius="22" />
             </LinearLayout>
 
-            <!-- Bottom: User Quote Section -->
+            <!-- Bottom: User Quote Section (Bigger & in Playfair Display Italic) -->
             <LinearLayout
                 android:id="@+id/quote_container"
                 android:layout_width="match_parent"
@@ -106,25 +106,29 @@
                     android:layout_height="wrap_content"
                     android:text="QUOTE BY ME:"
                     android:textColor="@color/quote_label_color"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.06"
+                    android:letterSpacing="0.08"
                     android:includeFontPadding="false" />
 
                 <TextView
                     android:id="@+id/tv_quote_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="3dp"
                     android:gravity="center"
                     android:text="“i am one of the few”"
                     android:textColor="@color/quote_text_color"
-                    android:textSize="15sp"
+                    android:textSize="18sp"
                     android:textStyle="italic"
-                    android:fontFamily="serif"
+                    android:fontFamily="@font/playfair_display_italic"
                     android:maxLines="2"
                     android:ellipsize="end"
-                    android:lineSpacingExtra="2dp" />
+                    android:lineSpacingExtra="3dp"
+                    android:shadowColor="#99000000"
+                    android:shadowDx="0"
+                    android:shadowDy="2"
+                    android:shadowRadius="8" />
             </LinearLayout>
 
         </LinearLayout>
