@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/widget_card_bg">
 
-        <!-- Complete 365 Year Dots Matrix Canvas (Uniform Starry Field with Plinths & Top-Layer Today Dot) -->
+        <!-- Complete 365 Year Dots Canvas with Borderless Plinths & Top-Layer Today Dot -->
         <ImageView
             android:id="@+id/iv_year_dots"
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp">
 
-            <!-- Top Header: Year Capsule & Direct Add Quote Shortcut -->
+            <!-- Top Header: Centered Year Pill & Direct Add Quote Shortcut -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -44,8 +44,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:gravity="center"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
                     android:paddingTop="3dp"
                     android:paddingBottom="3dp"
                     android:text="in 2026"
@@ -117,6 +118,7 @@
                         android:id="@+id/tv_quote_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="quote by me:"
                         android:textColor="@color/quote_label_color"
                         android:textSize="11sp"

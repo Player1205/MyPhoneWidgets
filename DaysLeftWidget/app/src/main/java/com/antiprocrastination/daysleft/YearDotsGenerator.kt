@@ -11,10 +11,12 @@ import java.time.LocalTime
 object YearDotsGenerator {
 
     /**
-     * Generates a complete 365-day ambient starry grid with translucent text plinths:
-     * - Dots inside the text backgrounds are visible, but softer/dimmed for perfect text contrast.
-     * - Dots outside the text backgrounds maintain standard starlight visibility.
-     * - TODAY'S DOT is drawn on top with 100% full brightness (Cyber Amber rim & dynamic white sweep fill).
+     * Generates a complete 365-day ambient starry grid with tight, borderless text scrims:
+     * - Background scrims are strictly limited to the text boundaries (no excess width).
+     * - ZERO borderlines on the text backgrounds.
+     * - Text "in 2026" is centered inside its capsule.
+     * - Ambient dots are more visible and radiant throughout.
+     * - Today's dot is drawn on the top layer at 100% full brightness (Cyber Amber rim & dynamic white sweep fill).
      */
     fun generateYearDotsBitmap(
         width: Int = 720,
@@ -37,49 +39,44 @@ object YearDotsGenerator {
         val stepX = (width - paddingX * 2) / (cols - 1)
         val stepY = (height - paddingY * 2) / (rows - 1)
 
-        // Text plinths bounding zones
-        val plinthYear = RectF(34f, 22f, 160f, 62f)
-        val plinthHero = RectF(50f, 86f, 670f, 212f)
-        val plinthQuote = RectF(150f, 238f, 570f, 328f)
+        // Tight text-only plinth bounding boxes (strictly limited to text, perfectly centered)
+        val plinthYear = RectF(32f, 22f, 138f, 58f)
+        val plinthHero = RectF(78f, 90f, 642f, 206f)
+        val plinthQuote = RectF(155f, 242f, 565f, 326f)
 
         fun inAnyPlinth(x: Float, y: Float): Boolean {
             return plinthYear.contains(x, y) || plinthHero.contains(x, y) || plinthQuote.contains(x, y)
         }
 
-        // Paints for dots outside the text backgrounds (normal starlight)
+        // Higher-visibility starlight dots outside text backgrounds
         val pastPaintOutside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(48, 255, 255, 255)
+            color = Color.argb(72, 255, 255, 255) // More visible starlight (~28% opacity)
             style = Paint.Style.FILL
         }
         val futurePaintOutside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(26, 255, 255, 255)
+            color = Color.argb(40, 255, 255, 255) // More visible hollow ring (~16% opacity)
             style = Paint.Style.STROKE
             strokeWidth = 1.4f
         }
 
-        // Paints for dots inside the text backgrounds (visible, but softer/dimmer)
+        // Softer dots inside text backgrounds
         val pastPaintInside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(24, 255, 255, 255)
+            color = Color.argb(36, 255, 255, 255) // Visible, but softer (~14% opacity)
             style = Paint.Style.FILL
         }
         val futurePaintInside = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(14, 255, 255, 255)
+            color = Color.argb(20, 255, 255, 255) // Subtle hollow ring (~8% opacity)
             style = Paint.Style.STROKE
             strokeWidth = 1.2f
         }
 
-        // Translucent Plinth Paints (frosted dark obsidian glass)
+        // Borderless dark glass fill paint (NO BORDERLINE!)
         val plinthFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(140, 8, 10, 18) // ~55% dark glass
+            color = Color.argb(135, 8, 10, 18) // Soft translucent dark tint
             style = Paint.Style.FILL
         }
-        val plinthStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(20, 255, 255, 255) // subtle 1px border
-            style = Paint.Style.STROKE
-            strokeWidth = 1.6f
-        }
 
-        // Today's dot paints (100% bright, full intensity)
+        // Today's dot paints (100% full intensity)
         val todayRingPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = Color.argb(255, 255, 183, 3) // Cyber Amber (#FFB703)
             style = Paint.Style.STROKE
@@ -90,12 +87,12 @@ object YearDotsGenerator {
             style = Paint.Style.FILL
         }
         val todayGlowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(100, 255, 183, 3)
+            color = Color.argb(110, 255, 183, 3)
             style = Paint.Style.STROKE
             strokeWidth = 2.0f
         }
 
-        // Step 1: Draw ambient dots
+        // Step 1: Draw ambient dots across the entire grid
         var todayX = -1f
         var todayY = -1f
 
@@ -113,24 +110,19 @@ object YearDotsGenerator {
                     todayY = cy
                 } else if (day < dayOfYear) {
                     val paint = if (isInside) pastPaintInside else pastPaintOutside
-                    canvas.drawCircle(cx, cy, 2.6f, paint)
+                    canvas.drawCircle(cx, cy, 2.8f, paint)
                 } else {
                     val paint = if (isInside) futurePaintInside else futurePaintOutside
-                    canvas.drawCircle(cx, cy, 2.2f, paint)
+                    canvas.drawCircle(cx, cy, 2.4f, paint)
                 }
                 day++
             }
         }
 
-        // Step 2: Draw the translucent plinths
+        // Step 2: Draw the borderless translucent text plinths (NO STROKE / NO BORDERLINE)
         canvas.drawRoundRect(plinthYear, 18f, 18f, plinthFillPaint)
-        canvas.drawRoundRect(plinthYear, 18f, 18f, plinthStrokePaint)
-
-        canvas.drawRoundRect(plinthHero, 26f, 26f, plinthFillPaint)
-        canvas.drawRoundRect(plinthHero, 26f, 26f, plinthStrokePaint)
-
+        canvas.drawRoundRect(plinthHero, 24f, 24f, plinthFillPaint)
         canvas.drawRoundRect(plinthQuote, 20f, 20f, plinthFillPaint)
-        canvas.drawRoundRect(plinthQuote, 20f, 20f, plinthStrokePaint)
 
         // Step 3: Draw Today's Dot ON TOP (100% visible, bright Cyber Amber)
         if (todayX >= 0f && todayY >= 0f) {
