@@ -9,6 +9,12 @@
     <color name="royal_honey_gold">#F5A623</color>
     <color name="hero_days_color">#FFB703</color>
 
+    <!-- Fallback & Drawable Gradient Swatches -->
+    <color name="gold_gradient_start">#FFBF1A</color>
+    <color name="gold_gradient_center">#F5A623</color>
+    <color name="gold_gradient_end">#E29000</color>
+    <color name="gold_rim_light">#FFE58F</color>
+
     <!-- Text Colors -->
     <color name="text_header_muted">#8B919E</color>
     <color name="quote_label_color">#838997</color>
@@ -21,6 +27,8 @@
     <color name="quote_bg">#12151F</color>
     <color name="badge_background">#161924</color>
     <color name="badge_border">#262C3D</color>
+    <color name="progress_track_bg">#181B26</color>
+    <color name="progress_track_fill">#FFB703</color>
     <color name="input_bg">#141722</color>
     <color name="input_border">#2A3042</color>
 

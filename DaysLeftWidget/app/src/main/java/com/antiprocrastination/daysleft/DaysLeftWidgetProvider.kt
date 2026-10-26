@@ -56,20 +56,20 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
                 val dayOfYear = today.dayOfYear
                 val daysLeft = totalDays - dayOfYear
 
-                // Apply Data to UI
+                // Apply Data to UI - Exactly as in the design
                 views.setTextViewText(R.id.tv_year_label, "in $year")
                 views.setTextViewText(R.id.tv_days_hero, "$daysLeft days left")
-                views.setTextViewText(R.id.tv_quote_label, "quote by me:")
+                views.setTextViewText(R.id.tv_quote_label, "QUOTE BY ME:")
                 views.setTextViewText(R.id.tv_quote_text, "“$quote”")
 
-                // Setup Click PendingIntent to cycle quote on tap
-                val cycleIntent = Intent(context, DaysLeftWidgetProvider::class.java).apply {
-                    action = ACTION_CYCLE_QUOTE
+                // Tapping the widget opens the Quote Vault / Add Quote screen directly
+                val openAppIntent = Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
-                val pendingIntent = PendingIntent.getBroadcast(
+                val pendingIntent = PendingIntent.getActivity(
                     context,
                     0,
-                    cycleIntent,
+                    openAppIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
