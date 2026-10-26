@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/widget_card_background"
-    android:padding="20dp">
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,9 +24,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="Luxury AMOLED Widget for Samsung Galaxy M35 5G"
+            android:text="Cyber Amber Hero Widget for Samsung Galaxy M35 5G"
             android:textColor="@color/text_muted"
             android:textSize="13sp" />
 
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:text="LIVE WIDGET PREVIEW"
             android:textColor="@color/text_muted"
             android:textSize="11sp"
@@ -48,11 +48,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp" />
 
-        <!-- Custom Personal Quote Editor -->
+        <!-- Personal Quotes Vault -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/quote_bg"
             android:orientation="vertical"
             android:padding="16dp">
@@ -60,43 +60,62 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✍️ Your Personal Quote (quote by me:)"
+                android:text="✍️ Personal Quotes Vault (Quotes by You)"
                 android:textColor="@color/text_title"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
+            <!-- Rotation Status Description -->
             <TextView
+                android:id="@+id/tv_vault_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="This is your signature quote displayed on the widget by default."
-                android:textColor="@color/text_muted"
-                android:textSize="12sp" />
-
-            <EditText
-                android:id="@+id/et_custom_quote"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/input_bg"
-                android:hint="e.g. i am one of the few"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/text_muted"
-                android:textSize="14sp" />
-
-            <Button
-                android:id="@+id/btn_save_quote"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/accent_color"
-                android:text="Save Quote &amp; Update Widget"
-                android:textAllCaps="false"
-                android:textColor="@color/pill_text_dark"
-                android:textSize="14sp"
+                android:text="1 quote active. Add more to enable 3-hour auto-shuffle!"
+                android:textColor="@color/hero_days_color"
+                android:textSize="12sp"
                 android:textStyle="bold" />
+
+            <!-- Input to Add New Quote -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_new_quote"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
+                    android:layout_weight="1"
+                    android:background="@color/input_bg"
+                    android:hint="Type a quote you wrote..."
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/text_muted"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_add_quote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/hero_days_color"
+                    android:text="+ Add"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Quotes List Container -->
+            <LinearLayout
+                android:id="@+id/container_quotes_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical" />
         </LinearLayout>
 
         <!-- Add Widget Button -->
@@ -105,10 +124,10 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/accent_color"
+            android:backgroundTint="@color/hero_days_color"
             android:text="⚡ Add Widget to Home Screen"
             android:textAllCaps="false"
-            android:textColor="@color/pill_text_dark"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -116,7 +135,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="18dp"
             android:background="@drawable/quote_bg"
             android:orientation="vertical"
             android:padding="16dp">
@@ -134,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:lineSpacingExtra="3dp"
-                android:text="1. Tap the button above, or go to Home Screen.\n2. Long-press empty space on screen.\n3. Tap 'Widgets' &gt; 'Days Left Widget'.\n4. Drag it to your home screen.\n5. Resize width to span nicely across screen."
+                android:text="1. Tap the button above, or go to your Home Screen.\n2. Long-press empty space on screen.\n3. Tap 'Widgets' &gt; 'Days Left Widget'.\n4. Drag it to your desired spot.\n5. Resize width to span nicely across your screen."
                 android:textColor="@color/text_muted"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -145,8 +164,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="24dp"
-            android:text="💡 Tip: Tap the widget on your home screen anytime to rotate quotes!"
-            android:textColor="@color/text_accent_gold"
+            android:text="💡 Tip: Quotes shuffle automatically every 3 hours. Tapping the widget previews the next quote anytime."
+            android:textColor="@color/hero_days_color"
             android:textSize="12sp" />
 
     </LinearLayout>

@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import java.time.LocalDate
-import java.util.Locale
 
 class DaysLeftWidgetProvider : AppWidgetProvider() {
 
@@ -17,9 +16,9 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
-        val quoteItem = QuoteManager.getCurrentQuote(context)
+        val quote = QuoteManager.getCurrentQuote(context)
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId, quoteItem)
+            updateAppWidget(context, appWidgetManager, appWidgetId, quote)
         }
     }
 
@@ -45,7 +44,7 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int,
-            quoteItem: QuoteItem
+            quote: String
         ) {
             try {
                 val views = RemoteViews(context.packageName, R.layout.widget_days_left)
@@ -56,17 +55,12 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
                 val totalDays = if (today.isLeapYear) 366 else 365
                 val dayOfYear = today.dayOfYear
                 val daysLeft = totalDays - dayOfYear
-                val percentGone = (dayOfYear.toDouble() / totalDays.toDouble()) * 100.0
 
                 // Apply Data to UI
                 views.setTextViewText(R.id.tv_year_label, "in $year")
-                views.setTextViewText(R.id.tv_pill_days, "$daysLeft days left")
-                views.setTextViewText(
-                    R.id.tv_percent_badge,
-                    String.format(Locale.US, "%.1f%% gone", percentGone)
-                )
-                views.setTextViewText(R.id.tv_quote_label, quoteItem.label)
-                views.setTextViewText(R.id.tv_quote_text, quoteItem.text)
+                views.setTextViewText(R.id.tv_days_hero, "$daysLeft days left")
+                views.setTextViewText(R.id.tv_quote_label, "quote by me:")
+                views.setTextViewText(R.id.tv_quote_text, "“$quote”")
 
                 // Setup Click PendingIntent to cycle quote on tap
                 val cycleIntent = Intent(context, DaysLeftWidgetProvider::class.java).apply {
@@ -79,10 +73,9 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
-                views.setOnClickPendingIntent(R.id.btn_refresh, pendingIntent)
-                views.setOnClickPendingIntent(R.id.quote_container, pendingIntent)
-                views.setOnClickPendingIntent(R.id.tv_pill_days, pendingIntent)
                 views.setOnClickPendingIntent(R.id.widget_card, pendingIntent)
+                views.setOnClickPendingIntent(R.id.tv_days_hero, pendingIntent)
+                views.setOnClickPendingIntent(R.id.quote_container, pendingIntent)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             } catch (e: Exception) {
