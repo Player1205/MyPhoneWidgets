@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@color/widget_card_background" />
+    <!-- Translucent Dark Obsidian Glass (Shows Wallpaper Through) -->
+    <solid android:color="#B8060810" />
     <corners android:radius="28dp" />
     <stroke
         android:width="1.5dp"
-        android:color="@color/widget_card_border" />
+        android:color="#24FFB703" />
 </shape>

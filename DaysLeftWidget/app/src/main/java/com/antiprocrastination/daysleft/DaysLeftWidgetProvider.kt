@@ -56,26 +56,28 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
                 val dayOfYear = today.dayOfYear
                 val daysLeft = totalDays - dayOfYear
 
-                // Apply Data to UI - Exactly as in the design
+                // Apply Data to UI - Exactly matching the designer specification
                 views.setTextViewText(R.id.tv_year_label, "in $year")
                 views.setTextViewText(R.id.tv_days_hero, "$daysLeft days left")
                 views.setTextViewText(R.id.tv_quote_label, "QUOTE BY ME:")
                 views.setTextViewText(R.id.tv_quote_text, "“$quote”")
 
-                // Tapping the widget opens the Quote Vault / Add Quote screen directly
-                val openAppIntent = Intent(context, MainActivity::class.java).apply {
+                // Open the floating translucent Add Quote dialog directly on the home screen
+                val openDialogIntent = Intent(context, AddQuoteActivity::class.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
                 val pendingIntent = PendingIntent.getActivity(
                     context,
-                    0,
-                    openAppIntent,
+                    appWidgetId,
+                    openDialogIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
 
                 views.setOnClickPendingIntent(R.id.widget_card, pendingIntent)
                 views.setOnClickPendingIntent(R.id.tv_days_hero, pendingIntent)
                 views.setOnClickPendingIntent(R.id.quote_container, pendingIntent)
+                views.setOnClickPendingIntent(R.id.btn_quick_add, pendingIntent)
 
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             } catch (e: Exception) {

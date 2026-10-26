@@ -9,13 +9,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DaysLeftWidget">
 
-        <!-- Companion Activity to preview and add widget directly -->
+        <!-- Main Launcher Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Translucent In-Place Home Screen Add Quote Dialog Activity -->
+        <activity
+            android:name=".AddQuoteActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FloatingQuoteDialog"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
