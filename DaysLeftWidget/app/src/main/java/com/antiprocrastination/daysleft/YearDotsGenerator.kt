@@ -6,6 +6,7 @@ import android.graphics.BlurMaskFilter
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Typeface
 import android.text.Layout
@@ -41,14 +42,15 @@ object YearDotsGenerator {
     }
 
     /**
-     * Renders the complete, pixel-perfect widget graphic canvas into an ARGB_8888 Bitmap:
+     * Renders the complete, pixel-perfect designer widget graphic canvas into an ARGB_8888 Bitmap:
+     * - Custom stepped silhouette: Top wide rounded card + bottom dynamic quote tab protruding downwards.
+     * - Bottom tab width dynamically adapts to the exact size of the user's quote (Zero Extra Background!).
      * - Fixes OEM launcher limitation (Samsung One UI ignores custom font & text shadow in RemoteViews).
      * - Renders authentic Playfair Display ExtraBold Italic directly on the canvas with hardware anti-aliasing.
      * - Multi-pass luminous Cyber Amber glow (inner tight halo + outer radiant aura).
-     * - Complete 365 uniform starry grid (28x14).
-     * - Dots directly under letter glyphs are softly dimmed (ZERO box overhang, zero borderlines).
-     * - TODAY'S DOT is rendered on the top layer at 100% full intensity (Cyber Amber rim & dynamic white sweep fill).
-     * - Quote rendered in Playfair Display Bold Italic with subtle drop shadow.
+     * - 365 uniform starry grid (28x14) across the main upper card.
+     * - TODAY'S DOT rendered on top layer at 100% full intensity (Cyber Amber rim & dynamic white sweep fill).
+     * - Quote rendered in Playfair Display Bold Italic inside the dedicated bottom tab.
      */
     fun generateWidgetBitmap(
         context: Context,
@@ -70,11 +72,80 @@ object YearDotsGenerator {
         val heroTypeface = getHeroTypeface(context)
         val quoteTypeface = getQuoteTypeface(context)
 
-        // Text setup & exact measurements (Zero Box Overhang!)
+        // 1. Measure Quote to dynamically size the bottom tab
+        val quoteText = "“$quote”"
+        val quoteMeasurePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            quoteTypeface?.let { typeface = it }
+            textSize = 28f
+        }
+        val measuredQuoteWidth = quoteMeasurePaint.measureText(quoteText)
+
+        val qLabelMeasurePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            textSize = 16f
+            letterSpacing = 0.08f
+        }
+        val labelWidth = qLabelMeasurePaint.measureText("quote by me:")
+
+        // Calculate dynamic tab width: wraps quote text with 40px padding on each side
+        val minTabWidth = 280f
+        val maxTabWidth = 630f
+        val naturalWidth = Math.max(measuredQuoteWidth + 80f, labelWidth + 80f)
+        val tabWidth = naturalWidth.coerceIn(minTabWidth, maxTabWidth)
+
+        val tabLeft = (width - tabWidth) / 2f
+        val tabRight = tabLeft + tabWidth
+
+        // 2. Geometry boundaries of the stepped silhouette
+        val mainTop = 10f
+        val mainBottom = 248f
+        val mainLeft = 14f
+        val mainRight = width - 14f
+        val mainRadius = 28f
+
+        val tabTop = mainBottom
+        val tabBottom = 348f
+        val tabRadius = 22f
+
+        // 3. Construct unified stepped silhouette Path
+        val backgroundPath = Path().apply {
+            // Main upper rounded rectangle
+            addRoundRect(
+                RectF(mainLeft, mainTop, mainRight, mainBottom),
+                mainRadius,
+                mainRadius,
+                Path.Direction.CW
+            )
+        }
+
+        val tabRadii = floatArrayOf(
+            0f, 0f, // Top-left (merges with main card)
+            0f, 0f, // Top-right (merges with main card)
+            tabRadius, tabRadius, // Bottom-right
+            tabRadius, tabRadius  // Bottom-left
+        )
+        val quoteTabPath = Path().apply {
+            addRoundRect(
+                RectF(tabLeft, mainBottom - 4f, tabRight, tabBottom),
+                tabRadii,
+                Path.Direction.CW
+            )
+        }
+
+        // Union main card and quote tab into one seamless continuous shape
+        backgroundPath.op(quoteTabPath, Path.Op.UNION)
+
+        // Fill with frosted dark obsidian glass (translucent, shows wallpaper through)
+        val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = Color.argb(225, 9, 12, 19)
+            style = Paint.Style.FILL
+        }
+        canvas.drawPath(backgroundPath, bgPaint)
+
+        // 4. Measure Hero Text & dimming bounds (Zero Box Overhang!)
         val heroText = "$daysLeft days left"
-        val heroTextSize = 88f
+        val heroTextSize = 80f
         val heroX = width / 2f
-        val heroY = 186f
+        val heroY = 166f
 
         val heroMeasurePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             heroTypeface?.let { typeface = it }
@@ -83,69 +154,40 @@ object YearDotsGenerator {
         val heroWidth = heroMeasurePaint.measureText(heroText)
         val heroLeft = (width - heroWidth) / 2f
         val heroRight = heroLeft + heroWidth
-        val heroTop = heroY - 68f
-        val heroBottom = heroY + 20f
+        val heroTop = heroY - 62f
+        val heroBottom = heroY + 18f
 
-        val quoteText = "“$quote”"
-        val quoteMeasurePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            quoteTypeface?.let { typeface = it }
-            textSize = 31f
-        }
-        val quoteWidth = quoteMeasurePaint.measureText(quoteText).coerceAtMost(600f)
-        val quoteLeft = (width - quoteWidth) / 2f
-        val quoteRight = quoteLeft + quoteWidth
-        val quoteTop = 246f
-        val quoteBottom = 320f
-
-        val yearText = "in $year"
-        val yearMeasurePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = 24f
-        }
-        val yearWidth = yearMeasurePaint.measureText(yearText)
-        val yearLeft = 44f
-        val yearRight = 44f + yearWidth
-        val yearTop = 22f
-        val yearBottom = 48f
-
-        // Exact glyph-based dimming check (ZERO overhang on left, right, top, bottom)
-        fun isUnderText(x: Float, y: Float): Boolean {
-            if (x in (heroLeft - 4f)..(heroRight + 4f) && y in heroTop..heroBottom) return true
-            if (x in (quoteLeft - 6f)..(quoteRight + 6f) && y in quoteTop..quoteBottom) return true
-            if (x in (yearLeft - 4f)..(yearRight + 4f) && y in yearTop..yearBottom) return true
-            return false
+        fun isUnderHeroText(x: Float, y: Float): Boolean {
+            return x in (heroLeft - 4f)..(heroRight + 4f) && y in heroTop..heroBottom
         }
 
-        // Grid parameters: uniform 28 columns x 14 rows across entire widget
+        // 5. Grid parameters for 365 Year Dots (28 cols x 14 rows inside main upper card)
         val cols = 28
         val rows = 14
-        val paddingX = 36f
-        val paddingY = 26f
-        val stepX = (width - paddingX * 2) / (cols - 1)
-        val stepY = (height - paddingY * 2) / (rows - 1)
+        val padX = 36f
+        val padY = 22f
+        val stepX = (width - padX * 2) / (cols - 1)
+        val stepY = (mainBottom - padY - 18f) / (rows - 1)
 
-        // Radiant starlight dots outside text
         val pastPaintBright = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(85, 255, 255, 255) // Bright starlight (~33% opacity)
+            color = Color.argb(80, 255, 255, 255) // Bright starlight (~31% opacity)
             style = Paint.Style.FILL
         }
         val futurePaintBright = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(50, 255, 255, 255) // Crisp hollow ring (~20% opacity)
+            color = Color.argb(45, 255, 255, 255) // Crisp hollow ring (~18% opacity)
             style = Paint.Style.STROKE
             strokeWidth = 1.4f
         }
-
-        // Softly dimmed dots directly under text glyphs (visible, but less bright)
         val pastPaintDimmed = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(32, 255, 255, 255) // Softened so letters pop cleanly
+            color = Color.argb(24, 255, 255, 255) // Softened under letters
             style = Paint.Style.FILL
         }
         val futurePaintDimmed = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(20, 255, 255, 255) // Subtle ring
+            color = Color.argb(14, 255, 255, 255)
             style = Paint.Style.STROKE
             strokeWidth = 1.2f
         }
 
-        // Today's dot paints (100% full intensity Cyber Amber)
         val todayRingPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = Color.argb(255, 255, 183, 3) // Cyber Amber (#FFB703)
             style = Paint.Style.STROKE
@@ -161,7 +203,7 @@ object YearDotsGenerator {
             strokeWidth = 2.0f
         }
 
-        // Step 1: Draw ambient 365 dots across the complete grid
+        // Step 1: Draw ambient dots across the main upper card
         var todayX = -1f
         var todayY = -1f
 
@@ -169,10 +211,10 @@ object YearDotsGenerator {
         for (r in 0 until rows) {
             for (c in 0 until cols) {
                 if (day > totalDays) break
-                val cx = paddingX + c * stepX
-                val cy = paddingY + r * stepY
+                val cx = padX + c * stepX
+                val cy = padY + r * stepY
 
-                val under = isUnderText(cx, cy)
+                val under = isUnderHeroText(cx, cy)
 
                 if (day == dayOfYear) {
                     todayX = cx
@@ -208,15 +250,15 @@ object YearDotsGenerator {
         // Step 3: Draw Top Header
         val yearPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = Color.parseColor("#A0A7B8")
-            textSize = 24f
+            textSize = 22f
             letterSpacing = 0.04f
         }
-        canvas.drawText("in $year", 44f, 44f, yearPaint)
+        canvas.drawText("in $year", 44f, 42f, yearPaint)
 
         val penPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            textSize = 24f
+            textSize = 22f
         }
-        canvas.drawText("✍️", width - 74f, 44f, penPaint)
+        canvas.drawText("✍️", width - 72f, 42f, penPaint)
 
         // Step 4: Draw Hero "$daysLeft days left" in Playfair Display ExtraBold Italic with Cyber Amber Glow
         // Outer radiant aura
@@ -253,38 +295,39 @@ object YearDotsGenerator {
         }
         canvas.drawText(heroText, heroX, heroY, heroTextPaint)
 
-        // Step 5: Draw Quote Section in Playfair Display Bold Italic
+        // Step 5: Draw Quote Section inside the Dynamic Bottom Tab
         val qLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = Color.parseColor("#9DA4B3")
-            textSize = 19f
+            textSize = 16f
             textAlign = Paint.Align.CENTER
             letterSpacing = 0.08f
         }
-        canvas.drawText("quote by me:", width / 2f, 268f, qLabelPaint)
+        canvas.drawText("quote by me:", width / 2f, tabTop + 24f, qLabelPaint)
 
         val quoteTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             quoteTypeface?.let { typeface = it }
-            textSize = 31f
+            textSize = 28f
             textAlign = Paint.Align.CENTER
             color = Color.WHITE
-            setShadowLayer(6f, 0f, 2f, Color.argb(150, 0, 0, 0))
+            setShadowLayer(4f, 0f, 1f, Color.argb(130, 0, 0, 0))
         }
 
-        if (quoteMeasurePaint.measureText(quoteText) > 600f) {
+        if (measuredQuoteWidth > (tabWidth - 40f)) {
             val textPaint = TextPaint(quoteTextPaint).apply {
                 textAlign = Paint.Align.LEFT
             }
-            val sl = StaticLayout.Builder.obtain(quoteText, 0, quoteText.length, textPaint, 600)
+            val wrapWidth = (tabWidth - 40f).toInt()
+            val sl = StaticLayout.Builder.obtain(quoteText, 0, quoteText.length, textPaint, wrapWidth)
                 .setAlignment(Layout.Alignment.ALIGN_CENTER)
                 .setMaxLines(2)
                 .setEllipsize(android.text.TextUtils.TruncateAt.END)
                 .build()
             canvas.save()
-            canvas.translate((width - 600f) / 2f, 282f)
+            canvas.translate((width - wrapWidth) / 2f, tabTop + 36f)
             sl.draw(canvas)
             canvas.restore()
         } else {
-            canvas.drawText(quoteText, width / 2f, 308f, quoteTextPaint)
+            canvas.drawText(quoteText, width / 2f, tabTop + 62f, quoteTextPaint)
         }
 
         return bitmap
@@ -305,16 +348,16 @@ object YearDotsGenerator {
         val cols = 28
         val rows = 14
         val paddingX = 36f
-        val paddingY = 26f
+        val paddingY = 22f
         val stepX = (width - paddingX * 2) / (cols - 1)
-        val stepY = (height - paddingY * 2) / (rows - 1)
+        val stepY = (248f - paddingY - 18f) / (rows - 1)
 
         val pastPaintBright = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(85, 255, 255, 255)
+            color = Color.argb(80, 255, 255, 255)
             style = Paint.Style.FILL
         }
         val futurePaintBright = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(50, 255, 255, 255)
+            color = Color.argb(45, 255, 255, 255)
             style = Paint.Style.STROKE
             strokeWidth = 1.4f
         }
