@@ -11,11 +11,12 @@ import java.time.LocalTime
 object YearDotsGenerator {
 
     /**
-     * Generates an ambient 365-day dot matrix background bitmap:
+     * Generates a starry 365-day ambient dot matrix background bitmap:
      * - ZERO OVERLAP with text: dots wrap around "in 2026", "66 days left", and quote sections.
-     * - Past days: Translucent filled soft-white dots
+     * - Uniform distribution across top, sides, divider, and bottom margins (no Swiss-cheese holes).
+     * - Past days: Translucent filled soft-white starlight dots
      * - Future days: Subtle hollow empty rings
-     * - Today's dot: Distinctly larger with dynamic sweep fill representing elapsed day progress
+     * - Today's dot: Distinctly larger with Cyber Amber ring & dynamic sweep fill representing elapsed day progress
      */
     fun generateYearDotsBitmap(
         width: Int = 720,
@@ -30,29 +31,29 @@ object YearDotsGenerator {
         val dayOfYear = today.dayOfYear
         val dayProgress = now.toSecondOfDay().toFloat() / 86400f
 
-        val cols = 44
-        val rows = 20
+        val cols = 42
+        val rows = 18
 
-        val paddingX = 25f
-        val paddingY = 20f
+        val paddingX = 28f
+        val paddingY = 22f
         val stepX = (width - paddingX * 2) / (cols - 1)
         val stepY = (height - paddingY * 2) / (rows - 1)
 
         val pastPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(45, 255, 255, 255) // Soft translucent white (~18% opacity)
+            color = Color.argb(44, 255, 255, 255) // Soft translucent white (~17% opacity)
             style = Paint.Style.FILL
         }
 
         val futurePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(20, 255, 255, 255) // Subtle hollow ring (~8% opacity)
+            color = Color.argb(22, 255, 255, 255) // Subtle hollow ring (~8% opacity)
             style = Paint.Style.STROKE
-            strokeWidth = 1.8f
+            strokeWidth = 1.4f
         }
 
         val todayRingPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(240, 255, 183, 3) // Cyber Amber ring
+            color = Color.argb(255, 255, 183, 3) // Cyber Amber ring (#FFB703)
             style = Paint.Style.STROKE
-            strokeWidth = 2.4f
+            strokeWidth = 2.2f
         }
 
         val todayFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -61,9 +62,9 @@ object YearDotsGenerator {
         }
 
         val todayGlowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.argb(80, 255, 183, 3)
+            color = Color.argb(90, 255, 183, 3)
             style = Paint.Style.STROKE
-            strokeWidth = 2.5f
+            strokeWidth = 1.6f
         }
 
         // Collect all non-overlapping wrap-around dot positions
@@ -73,15 +74,15 @@ object YearDotsGenerator {
                 val cx = paddingX + c * stepX
                 val cy = paddingY + r * stepY
 
-                // Exclusion zones to prevent ANY overlap with text:
+                // Clean organic exclusion zones to prevent ANY collision with text:
                 // 1. Top-left "in 2026"
-                val inTopLeft = cx < 210f && cy < 65f
-                // 2. Top-right "✍️"
-                val inTopRight = cx > (width - 90f) && cy < 65f
-                // 3. Center "66 days left" (including wide glow aura)
-                val inCenterHero = cx > 85f && cx < 635f && cy > 95f && cy < 240f
-                // 4. Bottom quote section ("QUOTE BY ME:" + quote text)
-                val inBottomQuote = cx > 115f && cx < 605f && cy > 250f
+                val inTopLeft = cx < 165f && cy < 65f
+                // 2. Top-right "✍️" edit shortcut
+                val inTopRight = cx > (width - 75f) && cy < 65f
+                // 3. Center "66 days left" hero text
+                val inCenterHero = cx > 80f && cx < 640f && cy > 92f && cy < 205f
+                // 4. Bottom quote section ("quote by me:" + quote text)
+                val inBottomQuote = cx > 140f && cx < 580f && cy > 240f && cy < 330f
 
                 if (!inTopLeft && !inTopRight && !inCenterHero && !inBottomQuote) {
                     validPositions.add(Pair(cx, cy))
@@ -89,33 +90,41 @@ object YearDotsGenerator {
             }
         }
 
-        // Render exactly totalDays dots wrapping around the text
-        val renderLimit = totalDays.coerceAtMost(validPositions.size)
+        // Uniformly sample across ALL valid positions so dots cover the entire height
+        // (top rows, side flanks, middle divider, and bottom margins) without bottom truncation
+        val selectedPositions = if (validPositions.size >= totalDays) {
+            val step = validPositions.size.toDouble() / totalDays
+            (0 until totalDays).map { validPositions[(it * step).toInt()] }
+        } else {
+            validPositions
+        }
+
+        val renderLimit = totalDays.coerceAtMost(selectedPositions.size)
         for (i in 0 until renderLimit) {
-            val (cx, cy) = validPositions[i]
+            val (cx, cy) = selectedPositions[i]
             val dayNumber = i + 1
 
             if (dayNumber < dayOfYear) {
                 // Past days: Soft translucent filled white dot
-                canvas.drawCircle(cx, cy, 3.2f, pastPaint)
+                canvas.drawCircle(cx, cy, 2.2f, pastPaint)
             } else if (dayNumber == dayOfYear) {
                 // Today: Distinctly larger dot with Cyber Amber ring & dynamic white sweep fill
-                val radius = 7.0f
-                canvas.drawCircle(cx, cy, radius + 3.5f, todayGlowPaint)
+                val radius = 5.8f
+                canvas.drawCircle(cx, cy, radius + 2.5f, todayGlowPaint)
                 canvas.drawCircle(cx, cy, radius, todayRingPaint)
 
                 if (dayProgress > 0.02f) {
                     val oval = RectF(
-                        cx - radius + 0.5f,
-                        cy - radius + 0.5f,
-                        cx + radius - 0.5f,
-                        cy + radius - 0.5f
+                        cx - radius + 0.6f,
+                        cy - radius + 0.6f,
+                        cx + radius - 0.6f,
+                        cy + radius - 0.6f
                     )
                     canvas.drawArc(oval, -90f, dayProgress * 360f, true, todayFillPaint)
                 }
             } else {
                 // Future days: Subtle hollow empty ring
-                canvas.drawCircle(cx, cy, 3.0f, futurePaint)
+                canvas.drawCircle(cx, cy, 1.8f, futurePaint)
             }
         }
 

@@ -16,8 +16,8 @@
     <color name="gold_rim_light">#FFE58F</color>
 
     <!-- Text Colors -->
-    <color name="text_header_muted">#8B919E</color>
-    <color name="quote_label_color">#838997</color>
+    <color name="text_header_muted">#A0A7B8</color>
+    <color name="quote_label_color">#9DA4B3</color>
     <color name="quote_text_color">#FFFFFF</color>
     <color name="text_accent_gold">#FFB703</color>
     <color name="text_title">#FFFFFF</color>

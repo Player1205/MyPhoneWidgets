@@ -59,7 +59,7 @@ class DaysLeftWidgetProvider : AppWidgetProvider() {
                 // Apply Data to UI
                 views.setTextViewText(R.id.tv_year_label, "in $year")
                 views.setTextViewText(R.id.tv_days_hero, "$daysLeft days left")
-                views.setTextViewText(R.id.tv_quote_label, "QUOTE BY ME:")
+                views.setTextViewText(R.id.tv_quote_label, "quote by me:")
                 views.setTextViewText(R.id.tv_quote_text, "“$quote”")
 
                 // Generate and apply dynamic 365 Year Dots background
