@@ -15,15 +15,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/widget_card_bg">
 
-        <!-- Layer 1: Subtle Curvy Contour Vector Waves (Low opacity motion graphics) -->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/bg_curvy_waves"
-            android:contentDescription="@null" />
-
-        <!-- Layer 2: Dynamic 365 Year Dots Matrix Canvas -->
+        <!-- Dynamic 365 Year Dots Matrix Canvas -->
         <ImageView
             android:id="@+id/iv_year_dots"
             android:layout_width="match_parent"
@@ -31,7 +23,7 @@
             android:scaleType="fitXY"
             android:contentDescription="@null" />
 
-        <!-- Layer 3: Card Content Foreground Layer -->
+        <!-- Card Content Foreground Layer -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
