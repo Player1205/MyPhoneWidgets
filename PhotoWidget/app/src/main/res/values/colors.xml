@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AMOLED & Dark Surface Palette -->
+    <color name="bg_dark">#080A0F</color>
+    <color name="card_dark">#121520</color>
+    <color name="card_dark_secondary">#181B28</color>
+    <color name="card_stroke">#24293D</color>
+    <color name="card_stroke_active">#FFB703</color>
+
+    <!-- Accent & Highlights -->
+    <color name="accent_amber">#FFB703</color>
+    <color name="accent_gold">#F5A623</color>
+    <color name="accent_amber_dim">#33FFB703</color>
+    <color name="accent_danger">#FF5252</color>
+
+    <!-- Oval Widget Frame Rim Palette -->
+    <color name="widget_frame_rim_dark">#111319</color>
+    <color name="widget_frame_rim_stroke">#24293D</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#9DA4B4</color>
+    <color name="text_muted">#656D80</color>
+
+    <!-- Base -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+</resources>

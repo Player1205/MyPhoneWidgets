@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Photo Cycle Widget</string>
+    <string name="widget_name">Oval Photo Frame</string>
+    <string name="widget_description">Displays your chosen photos in an elegant oval frame, rotating automatically at chosen intervals (15, 20, 30, 60 mins).</string>
+    <string name="add_photos">Add Photos</string>
+    <string name="btn_add_to_home">⚡ Add Widget to Home Screen</string>
+    <string name="interval_title">Rotation Interval</string>
+    <string name="photos_vault_title">Your Photos Vault</string>
+    <string name="empty_vault_msg">No photos added yet. Tap \'Add Photos\' to choose from your gallery!</string>
+    <string name="cycle_now">Cycle Next Photo</string>
+    <string name="shape_title">Widget Shape</string>
+</resources>
