@@ -250,7 +250,7 @@ class MainActivity : AppCompatActivity() {
             context = this,
             photoFile = activePhoto,
             width = 720,
-            height = 840,
+            height = 720,
             shape = shape,
             borderStyle = borderStyle
         )

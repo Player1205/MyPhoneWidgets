@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Photo Cycle Widget</string>
-    <string name="widget_name">Oval Photo Frame</string>
-    <string name="widget_description">Displays your chosen photos in an elegant oval frame, rotating automatically at chosen intervals (15, 20, 30, 60 mins).</string>
+    <string name="widget_name">Curved Photo Frame</string>
+    <string name="widget_description">Displays your chosen photos in a curved card frame, rotating automatically at chosen intervals (15, 20, 30, 60 mins).</string>
     <string name="add_photos">Add Photos</string>
     <string name="btn_add_to_home">⚡ Add Widget to Home Screen</string>
     <string name="interval_title">Rotation Interval</string>

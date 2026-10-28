@@ -20,9 +20,9 @@ object PhotoManager {
     private const val KEY_SHAPE = "widget_shape"
     private const val KEY_BORDER_STYLE = "border_style"
 
+    const val SHAPE_ROUNDED = "rounded"
     const val SHAPE_OVAL = "oval"
     const val SHAPE_CIRCLE = "circle"
-    const val SHAPE_ROUNDED = "rounded"
 
     const val BORDER_DARK = "dark_rim"
     const val BORDER_AMBER = "amber_rim"
@@ -211,7 +211,7 @@ object PhotoManager {
     }
 
     fun getShape(context: Context): String {
-        return getPrefs(context).getString(KEY_SHAPE, SHAPE_OVAL) ?: SHAPE_OVAL
+        return getPrefs(context).getString(KEY_SHAPE, SHAPE_ROUNDED) ?: SHAPE_ROUNDED
     }
 
     fun setShape(context: Context, shape: String) {

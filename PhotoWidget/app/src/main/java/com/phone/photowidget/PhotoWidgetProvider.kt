@@ -87,12 +87,12 @@ class PhotoWidgetProvider : AppWidgetProvider() {
                 val shape = PhotoManager.getShape(context)
                 val borderStyle = PhotoManager.getBorderStyle(context)
 
-                // Render high-DPI oval widget bitmap
+                // Render high-DPI curved rectangle widget bitmap
                 val bitmap = PhotoBitmapRenderer.renderWidgetBitmap(
                     context = context,
                     photoFile = activePhoto,
                     width = 720,
-                    height = 840,
+                    height = 720,
                     shape = shape,
                     borderStyle = borderStyle
                 )

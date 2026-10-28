@@ -3,16 +3,14 @@
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:padding="2dp">
+    android:background="@android:color/transparent">
 
     <ImageView
         android:id="@+id/iv_photo_widget"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:contentDescription="@string/widget_name" />
 
 </FrameLayout>

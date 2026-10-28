@@ -11,15 +11,15 @@ Custom home-screen widgets designed specifically for **Samsung Galaxy M35 5G** (
 * **Size**: 4×2 / 5×2 grid (~28%–30% screen height, full width) with smooth 26dp curved corners.
 * **Battery**: AMOLED deep black, 0% idle battery drain.
 
-### 2. [🖼️ Photo Cycle Widget (Oval Home Screen Frame)](./PhotoWidget)
-* **Goal**: Cycles through your favorite photos inside an elegant **Oval frame** (or Circle / Rounded Card) with an obsidian rim bezel.
+### 2. [🖼️ Photo Cycle Widget (Curved Home Screen Frame)](./PhotoWidget)
+* **Goal**: Cycles through your favorite photos inside a **curved rectangle** (with 28dp Samsung One UI corners) filling the full 2×2 widget area.
 * **Intervals**: Selectable auto-rotation at **15 min, 20 min, 30 min, 60 min**, 3h, 6h, or Daily.
 * **Features**:
   * Multi-image picker from system gallery.
   * Tap on widget to immediately switch to the next photo.
   * In-app Photos Vault to preview, reorder, set active, or remove photos.
   * 1-Tap Home Screen Placement (`requestPinAppWidget`).
-* **Size**: 2×2 grid cell (fits side-by-side with 2×2 One UI app folders like NetBanking/UPI).
+* **Size**: 2×2 grid cell (fits side-by-side and edge-to-edge with 2×2 One UI app folders like NetBanking/UPI).
 * **Battery**: 0% idle battery drain using efficient wake-while-idle alarms.
 
 ---

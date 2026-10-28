@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Oval Home Screen Frame"
+            android:text="Curved Home Screen Frame"
             android:textColor="@color/text_primary"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Cycles through your favorite photos automatically at your chosen intervals."
+            android:text="Cycles through your photos in a curved 2×2 widget matching Samsung One UI."
             android:textColor="@color/text_secondary"
             android:textSize="13sp" />
 
@@ -58,7 +58,7 @@
 
             <FrameLayout
                 android:layout_width="220dp"
-                android:layout_height="250dp"
+                android:layout_height="220dp"
                 android:layout_marginTop="14dp">
 
                 <ImageView
@@ -263,16 +263,28 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/chip_shape_oval"
+                    android:id="@+id/chip_shape_rounded"
                     android:layout_width="0dp"
                     android:layout_height="38dp"
                     android:layout_weight="1"
                     android:background="@drawable/pill_interval_active_bg"
                     android:gravity="center"
-                    android:text="Oval (Screenshot)"
+                    android:text="Curved Card"
                     android:textColor="@color/accent_amber"
                     android:textSize="12sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/chip_shape_oval"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/pill_interval_bg"
+                    android:gravity="center"
+                    android:text="Oval"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/chip_shape_circle"
@@ -283,18 +295,6 @@
                     android:background="@drawable/pill_interval_bg"
                     android:gravity="center"
                     android:text="Circle"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/chip_shape_rounded"
-                    android:layout_width="0dp"
-                    android:layout_height="38dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/pill_interval_bg"
-                    android:gravity="center"
-                    android:text="Rounded Card"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>

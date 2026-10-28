@@ -1,17 +1,17 @@
-# 🖼️ Photo Cycle Widget (Oval Home Screen Frame)
+# 🖼️ Photo Cycle Widget (Curved Home Screen Frame)
 
 > Custom Android Photo Widget designed specifically for **Samsung Galaxy M35 5G** (Samsung One UI).
-> Displays your favorite photos inside a sleek, dark-rimmed **Oval frame** (as well as Circle and Rounded Card), cycling automatically through your chosen photos at configurable intervals (15 min, 20 min, 30 min, 60 min, etc.).
+> Displays your favorite photos filling the full **2×2 widget area** inside a curved rectangle (with authentic 28dp One UI rounded corners), cycling automatically through your chosen photos at configurable intervals (15 min, 20 min, 30 min, 60 min, etc.).
 
 ---
 
 ## 📱 Widget Overview
 
-* **Screen Proportion**: Perfectly sized for a **2×2 home screen grid cell layout** (matching standard Samsung One UI folder/widget dimensions like NetBanking/UPI).
+* **Screen Proportion**: Perfectly sized for a **2×2 home screen grid cell layout** (matching standard Samsung One UI folder/widget dimensions like NetBanking/UPI edge-to-edge).
 * **Styling & Aesthetics**:
-  * **Sleek Oval Silhouette**: Portrait oval frame with authentic smooth curves.
-  * **Dark Obsidian Rim**: Deep `#0E1017` dark bezel with subtle contrast hairline highlight that floats elegantly on top of any wallpaper (dark, light, or dynamic).
-  * **Zero Wallpaper Obstruction**: Clean alpha-transparent background outside the oval frame so your wallpaper shines through.
+  * **Curved Rectangle (One UI 28dp)**: Fills 100% of the 2×2 widget area, matching the curved card corners of One UI app folders and widgets.
+  * **Dark Bezel Accent**: Subtle dark rim with contrast hairline highlight that defines the edges on both dark and light wallpapers.
+  * **Edge-to-Edge Center Crop**: Your photo fills the full card area smoothly with zero letterboxing.
   * **High-DPI Anti-Aliased Rendering**: Software/Canvas center-cropped bitmap rendering eliminates OEM launcher distortion or low-resolution scaling bugs.
 * **Core Features**:
   1. **Multi-Photo Selection**: Select multiple images at once directly from your device gallery.

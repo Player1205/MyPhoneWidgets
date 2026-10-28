@@ -22,19 +22,23 @@ object PhotoBitmapRenderer {
         context: Context,
         photoFile: File?,
         width: Int = 720,
-        height: Int = 840,
-        shape: String = PhotoManager.SHAPE_OVAL,
+        height: Int = 720,
+        shape: String = PhotoManager.SHAPE_ROUNDED,
         borderStyle: String = PhotoManager.BORDER_DARK
     ): Bitmap {
         val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
 
-        val strokeWidth = 12f
-        val padding = strokeWidth + 4f
+        // Minimal padding to prevent anti-aliased edge clipping while filling 100% of widget area
+        val strokeWidth = 8f
+        val padding = strokeWidth / 2f
         val rect = RectF(padding, padding, width - padding, height - padding)
 
         val shapePath = Path()
         when (shape) {
+            PhotoManager.SHAPE_OVAL -> {
+                shapePath.addOval(rect, Path.Direction.CW)
+            }
             PhotoManager.SHAPE_CIRCLE -> {
                 val size = min(rect.width(), rect.height())
                 val cx = rect.centerX()
@@ -43,13 +47,11 @@ object PhotoBitmapRenderer {
                 val circleRect = RectF(cx - r, cy - r, cx + r, cy + r)
                 shapePath.addOval(circleRect, Path.Direction.CW)
             }
-            PhotoManager.SHAPE_ROUNDED -> {
-                val cornerRadius = 60f
-                shapePath.addRoundRect(rect, cornerRadius, cornerRadius, Path.Direction.CW)
-            }
             else -> {
-                // Default: Beautiful Vertical Oval / Ellipse (Matches user screenshot)
-                shapePath.addOval(rect, Path.Direction.CW)
+                // Default: Curved Rectangle filling the full 2x2 widget area
+                // Corner radius mathematically matches Samsung One UI standard 28dp (~17.5% of dimension)
+                val cornerRadius = min(rect.width(), rect.height()) * 0.175f
+                shapePath.addRoundRect(rect, cornerRadius, cornerRadius, Path.Direction.CW)
             }
         }
 
