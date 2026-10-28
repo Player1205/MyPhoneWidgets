@@ -31,8 +31,8 @@ object PhotoBitmapRenderer {
         val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(output)
 
-        // Adequate padding when glow is enabled so the soft ambient aura fades naturally into the wallpaper
-        val padding = if (borderStyle == PhotoManager.BORDER_GOLD_GLOW) 24f else 6f
+        // Adequate padding when glow is enabled so the radiant golden aura blooms into the wallpaper
+        val padding = if (borderStyle == PhotoManager.BORDER_GOLD_GLOW) 30f else 6f
         val rect = RectF(padding, padding, width - padding, height - padding)
 
         val shapePath = Path()
@@ -101,29 +101,39 @@ object PhotoBitmapRenderer {
     }
 
     /**
-     * Renders a soft, non-intrusive ambient golden glow emanating outwards behind the widget.
-     * Controlled opacity ensures the glow is classy and not overpowering.
+     * Renders a vibrant, multi-layered golden glow blooming outward behind the widget.
+     * Features an outer atmospheric aura, a bright mid glow, and a luminous core halo.
      */
     private fun drawSubtleGlowBehind(canvas: Canvas, path: Path) {
-        // Outer diffuse ambient aura (soft Cyber Amber, ~16% opacity)
+        // Layer 1: Wide atmospheric ambient aura (soft Cyber Amber, ~45% opacity)
         val outerAuraPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
-            strokeWidth = 16f
-            color = Color.argb(42, 255, 183, 3) // Cyber Amber #FFB703
-            maskFilter = BlurMaskFilter(16f, BlurMaskFilter.Blur.NORMAL)
+            strokeWidth = 24f
+            color = Color.argb(115, 255, 183, 3) // Cyber Amber #FFB703
+            maskFilter = BlurMaskFilter(22f, BlurMaskFilter.Blur.NORMAL)
             isDither = true
         }
         canvas.drawPath(path, outerAuraPaint)
 
-        // Inner tighter radiant halo (~30% opacity)
-        val innerHaloPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        // Layer 2: Mid luminous golden radiance (~70% opacity)
+        val midGlowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
-            strokeWidth = 9f
-            color = Color.argb(78, 255, 191, 26) // Royal Honey Gold #FFBF1A
-            maskFilter = BlurMaskFilter(7f, BlurMaskFilter.Blur.NORMAL)
+            strokeWidth = 14f
+            color = Color.argb(180, 255, 191, 26) // Royal Honey Gold #FFBF1A
+            maskFilter = BlurMaskFilter(11f, BlurMaskFilter.Blur.NORMAL)
             isDither = true
         }
-        canvas.drawPath(path, innerHaloPaint)
+        canvas.drawPath(path, midGlowPaint)
+
+        // Layer 3: Intense inner core halo (~92% opacity)
+        val innerCorePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE
+            strokeWidth = 8f
+            color = Color.argb(235, 255, 210, 60) // Luminous Radiant Gold
+            maskFilter = BlurMaskFilter(5f, BlurMaskFilter.Blur.NORMAL)
+            isDither = true
+        }
+        canvas.drawPath(path, innerCorePaint)
     }
 
     private fun drawBorder(
@@ -138,19 +148,19 @@ object PhotoBitmapRenderer {
                 // Main Golden Stroke (Cyber Amber #FFB703)
                 val goldBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                     style = Paint.Style.STROKE
-                    strokeWidth = 5.5f
+                    strokeWidth = 6.5f
                     color = Color.parseColor("#FFB703")
                 }
                 canvas.drawPath(path, goldBorderPaint)
 
-                // Inner hairline golden highlight (#FFE58F champagne gold)
+                // Inner hairline golden highlight (#FFF0B3 bright champagne gold)
                 val highlightPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                     style = Paint.Style.STROKE
-                    strokeWidth = 1.6f
-                    color = Color.parseColor("#FFE58F")
+                    strokeWidth = 2.0f
+                    color = Color.parseColor("#FFF0B3")
                 }
 
-                val inset = 1.8f
+                val inset = 2.0f
                 val innerRect = RectF(rect.left + inset, rect.top + inset, rect.right - inset, rect.bottom - inset)
                 val innerPath = Path()
                 when (shape) {
