@@ -9,8 +9,9 @@
 
 * **Screen Proportion**: Perfectly sized for a **2×2 home screen grid cell layout** (matching standard Samsung One UI folder/widget dimensions like NetBanking/UPI edge-to-edge).
 * **Styling & Aesthetics**:
-  * **Curved Rectangle (One UI 28dp)**: Fills 100% of the 2×2 widget area, matching the curved card corners of One UI app folders and widgets.
-  * **Dark Bezel Accent**: Subtle dark rim with contrast hairline highlight that defines the edges on both dark and light wallpapers.
+  * **Curved Rectangle (One UI 28dp)**: Fills the 2×2 widget area with authentic 28dp rounded corners.
+  * **Golden Border Rim**: Luxury double-edge golden border with champagne highlight (`#FFB703` + `#FFE58F`).
+  * **Soft Ambient Glow**: Elegant golden backlight aura emanating smoothly behind the widget perimeter (subtle, non-overpowering opacity).
   * **Edge-to-Edge Center Crop**: Your photo fills the full card area smoothly with zero letterboxing.
   * **High-DPI Anti-Aliased Rendering**: Software/Canvas center-cropped bitmap rendering eliminates OEM launcher distortion or low-resolution scaling bugs.
 * **Core Features**:

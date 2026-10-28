@@ -10,6 +10,8 @@
     <!-- Accent & Highlights -->
     <color name="accent_amber">#FFB703</color>
     <color name="accent_gold">#F5A623</color>
+    <color name="gold_rim_light">#FFE58F</color>
+    <color name="gold_glow">#4DFFB703</color>
     <color name="accent_amber_dim">#33FFB703</color>
     <color name="accent_danger">#FF5252</color>
 

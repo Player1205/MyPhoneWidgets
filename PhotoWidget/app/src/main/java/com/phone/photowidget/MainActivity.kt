@@ -47,8 +47,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var chipShapeRounded: TextView
 
     // Border Chips
+    private lateinit var chipBorderGoldGlow: TextView
+    private lateinit var chipBorderGold: TextView
     private lateinit var chipBorderDark: TextView
-    private lateinit var chipBorderAmber: TextView
     private lateinit var chipBorderNone: TextView
 
     // Multi-Image Picker Launcher (Android 13+ Photo Picker with backwards-compatible Google Play Services)
@@ -126,8 +127,9 @@ class MainActivity : AppCompatActivity() {
         chipShapeCircle = findViewById(R.id.chip_shape_circle)
         chipShapeRounded = findViewById(R.id.chip_shape_rounded)
 
+        chipBorderGoldGlow = findViewById(R.id.chip_border_gold_glow)
+        chipBorderGold = findViewById(R.id.chip_border_gold)
         chipBorderDark = findViewById(R.id.chip_border_dark)
-        chipBorderAmber = findViewById(R.id.chip_border_amber)
         chipBorderNone = findViewById(R.id.chip_border_none)
     }
 
@@ -198,8 +200,9 @@ class MainActivity : AppCompatActivity() {
         chipShapeRounded.setOnClickListener { selectShape(PhotoManager.SHAPE_ROUNDED) }
 
         // Border chips click handlers
+        chipBorderGoldGlow.setOnClickListener { selectBorder(PhotoManager.BORDER_GOLD_GLOW) }
+        chipBorderGold.setOnClickListener { selectBorder(PhotoManager.BORDER_GOLD) }
         chipBorderDark.setOnClickListener { selectBorder(PhotoManager.BORDER_DARK) }
-        chipBorderAmber.setOnClickListener { selectBorder(PhotoManager.BORDER_AMBER) }
         chipBorderNone.setOnClickListener { selectBorder(PhotoManager.BORDER_NONE) }
     }
 
@@ -325,8 +328,9 @@ class MainActivity : AppCompatActivity() {
     private fun updateBorderChipsUI() {
         val currentBorder = PhotoManager.getBorderStyle(this)
         val borderMap = mapOf(
+            PhotoManager.BORDER_GOLD_GLOW to chipBorderGoldGlow,
+            PhotoManager.BORDER_GOLD to chipBorderGold,
             PhotoManager.BORDER_DARK to chipBorderDark,
-            PhotoManager.BORDER_AMBER to chipBorderAmber,
             PhotoManager.BORDER_NONE to chipBorderNone
         )
 

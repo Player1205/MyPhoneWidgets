@@ -24,8 +24,9 @@ object PhotoManager {
     const val SHAPE_OVAL = "oval"
     const val SHAPE_CIRCLE = "circle"
 
+    const val BORDER_GOLD_GLOW = "gold_glow"
+    const val BORDER_GOLD = "gold"
     const val BORDER_DARK = "dark_rim"
-    const val BORDER_AMBER = "amber_rim"
     const val BORDER_NONE = "none"
 
     const val DEFAULT_INTERVAL_MINUTES = 15
@@ -219,7 +220,7 @@ object PhotoManager {
     }
 
     fun getBorderStyle(context: Context): String {
-        return getPrefs(context).getString(KEY_BORDER_STYLE, BORDER_DARK) ?: BORDER_DARK
+        return getPrefs(context).getString(KEY_BORDER_STYLE, BORDER_GOLD_GLOW) ?: BORDER_GOLD_GLOW
     }
 
     fun setBorderStyle(context: Context, borderStyle: String) {
