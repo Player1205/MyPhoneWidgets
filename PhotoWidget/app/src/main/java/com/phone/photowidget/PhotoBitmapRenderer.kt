@@ -13,6 +13,7 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.Typeface
+import androidx.exifinterface.media.ExifInterface
 import java.io.File
 import kotlin.math.max
 import kotlin.math.min
@@ -249,7 +250,35 @@ object PhotoBitmapRenderer {
                 this.inSampleSize = inSampleSize
                 inPreferredConfig = Bitmap.Config.ARGB_8888
             }
-            BitmapFactory.decodeFile(filePath, decodeOptions)
+            val decoded = BitmapFactory.decodeFile(filePath, decodeOptions) ?: return null
+
+            // Correct EXIF orientation so photos always render upright
+            try {
+                val exif = ExifInterface(filePath)
+                val orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL
+                )
+                val rotationDegrees = when (orientation) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90f
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                    else -> 0f
+                }
+                if (rotationDegrees != 0f) {
+                    val matrix = Matrix().apply { postRotate(rotationDegrees) }
+                    val rotated = Bitmap.createBitmap(decoded, 0, 0, decoded.width, decoded.height, matrix, true)
+                    if (rotated != decoded) {
+                        decoded.recycle()
+                    }
+                    rotated
+                } else {
+                    decoded
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                decoded
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             null

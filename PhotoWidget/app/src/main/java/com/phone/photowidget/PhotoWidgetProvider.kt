@@ -87,42 +87,37 @@ class PhotoWidgetProvider : AppWidgetProvider() {
                 val shape = PhotoManager.getShape(context)
                 val borderStyle = PhotoManager.getBorderStyle(context)
 
+                // Dynamically match launcher widget aspect ratio (eliminates vertical/horizontal compression)
+                val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+                val minWidth = options?.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)?.takeIf { it > 0 } ?: 150
+                val minHeight = options?.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT)?.takeIf { it > 0 } ?: 180
+
+                val targetWidth = 720
+                val targetHeight = (720f * minHeight / minWidth).toInt().coerceIn(600, 1100)
+
                 // Render high-DPI curved rectangle widget bitmap
                 val bitmap = PhotoBitmapRenderer.renderWidgetBitmap(
                     context = context,
                     photoFile = activePhoto,
-                    width = 720,
-                    height = 720,
+                    width = targetWidth,
+                    height = targetHeight,
                     shape = shape,
                     borderStyle = borderStyle
                 )
 
                 views.setImageViewBitmap(R.id.iv_photo_widget, bitmap)
 
-                val photos = PhotoManager.getPhotoFileNames(context)
-                val pendingIntent: PendingIntent = if (photos.isEmpty()) {
-                    // No photos yet: tap opens app to select photos
-                    val openAppIntent = Intent(context, MainActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    }
-                    PendingIntent.getActivity(
-                        context,
-                        appWidgetId,
-                        openAppIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
-                } else {
-                    // Tap immediately cycles to next photo
-                    val cycleIntent = Intent(context, PhotoWidgetProvider::class.java).apply {
-                        action = ACTION_CYCLE_NEXT
-                    }
-                    PendingIntent.getBroadcast(
-                        context,
-                        appWidgetId,
-                        cycleIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                    )
+                // Tap or tap-and-hold opens the Quick Options dialog (Set Time, Add Photos, Next Photo)
+                val openOptionsIntent = Intent(context, WidgetOptionsActivity::class.java).apply {
+                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
+                val pendingIntent = PendingIntent.getActivity(
+                    context,
+                    appWidgetId,
+                    openOptionsIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
 
                 views.setOnClickPendingIntent(R.id.widget_root, pendingIntent)
                 views.setOnClickPendingIntent(R.id.iv_photo_widget, pendingIntent)

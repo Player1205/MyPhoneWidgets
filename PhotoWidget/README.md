@@ -15,20 +15,26 @@
   * **Edge-to-Edge Center Crop**: Your photo fills the full card area smoothly with zero letterboxing.
   * **High-DPI Anti-Aliased Rendering**: Software/Canvas center-cropped bitmap rendering eliminates OEM launcher distortion or low-resolution scaling bugs.
 * **Core Features**:
-  1. **Multi-Photo Selection**: Select multiple images at once directly from your device gallery.
-  2. **Configurable Rotation Intervals**:
+  1. **Automatic EXIF Orientation Correction**: Photos are detected and rotated upright automatically (zero accidental sideways tilting!).
+  2. **Uncompressed Aspect Ratio**: Preserves natural photo proportions with uniform scaling (zero stretching, squishing, or distortion).
+  3. **Tap & Hold / Tap Quick Options**:
+     * Tap or long-press the widget to open the in-place floating dialog directly on your home screen.
+     * **Option 1**: ⏱️ **Set Rotation Time** (15m, 20m, 30m, 60m, 3h, Daily).
+     * **Option 2**: 🖼️ **Add Photos** (opens gallery to pick multiple pictures).
+     * **Quick Action**: 🔄 **Next Photo** button to switch pictures immediately.
+  4. **Multi-Photo Selection**: Select multiple images at once directly from your device gallery.
+  5. **Configurable Rotation Intervals**:
      * **15 Minutes** (User Preset)
      * **20 Minutes** (User Preset)
      * **30 Minutes** (User Preset)
      * **60 Minutes (1 Hour)** (User Preset)
      * **3 Hours**, **6 Hours**, or **24 Hours (Daily)**
-  3. **Instant Tap Rotation**: Tapping the widget on your home screen immediately advances to the next photo in your rotation with a subtle toast indicator (`Photo 2 of 5`).
-  4. **Photos Vault Management**:
+  6. **Photos Vault Management**:
      * Live preview card in-app with next/previous controls.
      * Horizontal thumbnail gallery showing all photos in rotation.
      * **"Set Active"** button to jump directly to any photo on your home screen.
      * Individual photo deletion (`✕`).
-  5. **0% Idle Battery Drain**:
+  7. **0% Idle Battery Drain**:
      * Uses Android `AlarmManager` with wake-while-idle alarms rather than battery-draining continuous background services.
      * Survives phone restarts with automatic `BOOT_COMPLETED` rescheduling.
 

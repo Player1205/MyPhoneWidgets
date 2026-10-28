@@ -23,6 +23,16 @@
             </intent-filter>
         </activity>
 
+        <!-- Translucent Floating Quick Options Dialog (Tap / Tap and Hold) -->
+        <activity
+            android:name=".WidgetOptionsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FloatingWidgetDialog">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
         <!-- App Widget Provider for Home Screen (2x2 Oval Frame) -->
         <receiver
             android:name=".PhotoWidgetProvider"
