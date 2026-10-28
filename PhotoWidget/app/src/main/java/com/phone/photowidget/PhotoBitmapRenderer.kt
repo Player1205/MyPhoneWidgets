@@ -71,9 +71,10 @@ object PhotoBitmapRenderer {
                 val bWidth = sourceBitmap.width.toFloat()
                 val bHeight = sourceBitmap.height.toFloat()
 
+                val (panX, panY) = if (photoFile != null) PhotoManager.getPhotoPanOffset(context, photoFile.name) else Pair(0.5f, 0.5f)
                 val scale = max(rect.width() / bWidth, rect.height() / bHeight)
-                val dx = rect.left + (rect.width() - bWidth * scale) / 2f
-                val dy = rect.top + (rect.height() - bHeight * scale) / 2f
+                val dx = rect.left + (rect.width() - bWidth * scale) * panX
+                val dy = rect.top + (rect.height() - bHeight * scale) * panY
 
                 matrix.setScale(scale, scale)
                 matrix.postTranslate(dx, dy)

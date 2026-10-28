@@ -156,6 +156,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        findViewById<Button>(R.id.btn_preview_slide_photo)?.setOnClickListener {
+            val photos = PhotoManager.getPhotoFileNames(this)
+            if (photos.isNotEmpty()) {
+                startActivity(Intent(this, PhotoPanViewerActivity::class.java))
+            } else {
+                Toast.makeText(this, "Add photos first!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         findViewById<Button>(R.id.btn_cycle_now)?.setOnClickListener {
             val photos = PhotoManager.getPhotoFileNames(this)
             if (photos.size > 1) {

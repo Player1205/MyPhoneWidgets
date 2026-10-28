@@ -33,12 +33,19 @@
             </intent-filter>
         </activity>
 
-        <!-- App Widget Provider for Home Screen (2x2 Oval Frame) -->
+        <!-- Interactive Slide / Pan Full Photo Viewer -->
+        <activity
+            android:name=".PhotoPanViewerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PhotoWidget" />
+
+        <!-- App Widget Provider for Home Screen (2x2 Curved Card Frame) -->
         <receiver
             android:name=".PhotoWidgetProvider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.phone.photowidget.ACTION_WIDGET_TAP" />
                 <action android:name="com.phone.photowidget.ACTION_CYCLE_NEXT" />
                 <action android:name="com.phone.photowidget.ACTION_CYCLE_PREV" />
             </intent-filter>

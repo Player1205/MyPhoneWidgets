@@ -230,6 +230,20 @@ object PhotoManager {
         getPrefs(context).edit().putString(KEY_BORDER_STYLE, borderStyle).apply()
     }
 
+    fun getPhotoPanOffset(context: Context, fileName: String): Pair<Float, Float> {
+        val prefs = getPrefs(context)
+        val x = prefs.getFloat("pan_x_$fileName", 0.5f)
+        val y = prefs.getFloat("pan_y_$fileName", 0.5f)
+        return Pair(x, y)
+    }
+
+    fun setPhotoPanOffset(context: Context, fileName: String, panX: Float, panY: Float) {
+        getPrefs(context).edit()
+            .putFloat("pan_x_$fileName", panX)
+            .putFloat("pan_y_$fileName", panY)
+            .apply()
+    }
+
     private fun decodeSampledBitmapFromStream(
         inputStream: InputStream,
         reqWidth: Int,

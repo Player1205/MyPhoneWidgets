@@ -17,11 +17,12 @@
 * **Core Features**:
   1. **Automatic EXIF Orientation Correction**: Photos are detected and rotated upright automatically (zero accidental sideways tilting!).
   2. **Uncompressed Aspect Ratio**: Preserves natural photo proportions with uniform scaling (zero stretching, squishing, or distortion).
-  3. **Tap & Hold / Tap Quick Options**:
-     * Tap or long-press the widget to open the in-place floating dialog directly on your home screen.
-     * **Option 1**: ⏱️ **Set Rotation Time** (15m, 20m, 30m, 60m, 3h, Daily).
-     * **Option 2**: 🖼️ **Add Photos** (opens gallery to pick multiple pictures).
-     * **Quick Action**: 🔄 **Next Photo** button to switch pictures immediately.
+  3. **Touch Gestures & Quick Options**:
+     * **Single Tap on Widget**: Immediately cycles to the next photo in your rotation.
+     * **Double Tap or Tap & Hold (Long-Press)**: Opens the floating in-place Quick Options dialog directly on your home screen with:
+       * **Option 1**: ⏱️ **Set Rotation Time** (15m, 20m, 30m, 60m, 3h, Daily).
+       * **Option 2**: 🖼️ **Add Photos** (opens system gallery picker).
+     * **Slide to See Rest of Photo**: Tap **"👆 Slide & Pan Full Photo"** in the quick dialog or app to slide your finger across the photo with smooth drag and pinch-to-zoom, plus a "Save Focus to Widget" button to customize which part shows on the home screen!
   4. **Multi-Photo Selection**: Select multiple images at once directly from your device gallery.
   5. **Configurable Rotation Intervals**:
      * **15 Minutes** (User Preset)

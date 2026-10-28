@@ -107,6 +107,18 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btn_preview_slide_photo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_secondary"
+                android:text="👆 Slide &amp; Explore Full Photo"
+                android:textAllCaps="false"
+                android:textColor="@color/accent_amber"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
         <!-- Interval Selector Section -->

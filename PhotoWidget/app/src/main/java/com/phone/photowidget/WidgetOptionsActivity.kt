@@ -107,6 +107,14 @@ class WidgetOptionsActivity : AppCompatActivity() {
             finish()
         }
 
+        findViewById<Button>(R.id.btn_dialog_slide_photo)?.setOnClickListener {
+            val intent = Intent(this, PhotoPanViewerActivity::class.java).apply {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            }
+            startActivity(intent)
+            finish()
+        }
+
         findViewById<Button>(R.id.btn_dialog_cycle_now)?.setOnClickListener {
             val photos = PhotoManager.getPhotoFileNames(this)
             if (photos.size > 1) {
